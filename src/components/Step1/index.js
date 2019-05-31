@@ -3,8 +3,8 @@ import Intro from "./components/Intro.js";
 import * as styles from "./styles.scss";
 import SignUpWithEmail from "./components/SignUpWithEmail";
 import Next from "./components/Next";
-
 import { Formik } from "formik";
+import validator from "validator";
 
 class Step1 extends Component {
     constructor(props) {
@@ -20,10 +20,7 @@ class Step1 extends Component {
 
     handleNextStep = () => {
         console.log(`handleNextStep`);
-        let formIsValid = true;
-        if (formIsValid) {
-            this.props.nextStep();
-        }
+        // this.props.nextStep();
     };
 
     handleOnChange = event => {
@@ -41,6 +38,7 @@ class Step1 extends Component {
             <div id="step-1" className="step" styles={styles}>
                 <div className="step-container">
                     <Formik
+                        validate
                         initialValues={{
                             firstName: "",
                             lastName: "",
@@ -69,13 +67,21 @@ class Step1 extends Component {
 
                             if (!values.tel) {
                                 errors.tel = "Required";
+                            } else if (
+                                !validator.isMobilePhoneLocales(
+                                    values.tel,
+                                    "en-AU",
+                                    { strictMode: true }
+                                )
+                            ) {
+                                errors.tel = "Invalid telephone number";
                             }
                         }}
                         onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
+                            // setTimeout(() => {
+                            //     alert(JSON.stringify(values, null, 2));
+                            //     setSubmitting(false);
+                            // }, 400);
                         }}
                         render={({
                             values,
@@ -97,7 +103,7 @@ class Step1 extends Component {
                                 />
                                 <Next
                                     nextStep={() => {
-                                        this.handleNextStep();
+                                        handleSubmit();
                                     }}
                                 />
                             </>
