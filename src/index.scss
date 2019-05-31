@@ -1,0 +1,56 @@
+html, body {
+	box-sizing: border-box;
+	height: 100%;
+	min-height: 100%;
+	font-size: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;	
+}
+
+.flex {
+  display: flex; }
+
+.row {
+  flex-direction: row !important; }
+
+.column {
+  flex-direction: column !important; }
+
+.center-all {
+  justify-content: center;
+  align-items: center !important; } 
+
+.align-center {
+  align-items: center !important; }
+
+.align-start {
+  align-items: flex-start !important; }
+
+.align-end {
+  align-items: flex-end !important; }
+.align-stretch {
+  align-items: stretch !important;
+}
+.justify-start {
+  justify-content: flex-start !important; }
+
+.justify-end {
+  justify-content: flex-end !important; }
+
+.justify-center {
+  justify-content: center !important; }
+
+.space-around {
+  justify-content: space-around !important;
+}
+
+.space-between {
+  justify-content: space-between !important; }
+
+.wrap  {
+  flex-wrap: wrap !important;
+}

@@ -1,0 +1,15 @@
+.step {
+  padding: 0 1rem;
+
+  .section {
+    padding: 1.5rem 0 1rem;
+    border-bottom: 1px solid grey;
+  }
+
+
+  form {
+  	input, label, button {
+  		width: 100%;
+  	}
+  }
+}

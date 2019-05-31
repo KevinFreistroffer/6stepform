@@ -1,26 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Router } from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import HeaderComponent from './components/Header/index.js';
+import Step1 from './components/Step1/index.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export class App extends Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      headerDate: 'November 23, 2019456',
+      currentStep: 1
+    };
+  }
+
+  nextStep = () => {
+    if (this.state.currentStep !== 6) {
+      this.setState(prevState => {
+        const newStep = prevState.currentStep + 1;
+
+        return { currentStep: newStep }
+      });
+    }
+  };
+
+  previousStep = () => {
+    if (this.state.currentStep !== 1) {
+      this.setState(prevState => {
+        const newStep = prevState.currentStep - 1;
+
+        return { currentStep: newStep }
+      });
+    }
+  };
+
+  render() {
+    const { currentStep } = this.state;
+
+    return (
+      <div className="App">   
+        <HeaderComponent 
+          date={this.state.headerDate}>
+        </HeaderComponent>
+        {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
+      </div>
+    );
+  }
+}  
+
 
 export default App;
