@@ -4,7 +4,7 @@ import * as styles from "./styles.scss";
 import SignUpWithEmail from "./components/SignUpWithEmail";
 import YourAddress from "./components/YourAddress/index";
 import ErrorMessages from "./components/ErrorMessages";
-import Next from "./components/Next";
+import NextButton from "./components/NextButton";
 import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
 
@@ -29,7 +29,7 @@ class Step1 extends Component {
         };
     }
 
-    toggleManualAddressIsVisible = () => {
+    toggleManualAddressIsVisible = (inputName = '') => {
         this.setState({ 
             manualAddressIsVisible: !this.state.manualAddressIsVisible 
         });
@@ -210,7 +210,7 @@ class Step1 extends Component {
                                     errors={errors}
                                     toggleManualAddressIsVisible={this.toggleManualAddressIsVisible}
                                 />
-                                <Next />
+                                <NextButton />
                             </form>
                         )}
                     </Formik>
