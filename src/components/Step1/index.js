@@ -1,30 +1,32 @@
-import React, { Component } from "react";
-import Intro from "./components/Intro.js";
-import * as styles from "./styles.scss";
-import SignUpWithEmail from "./components/SignUpWithEmail";
-import YourAddress from "./components/YourAddress/index";
-import ErrorMessages from "./components/ErrorMessages";
-import NextButton from "./components/NextButton";
-import { Formik, Form, ErrorMessage } from "formik";
-import validator from "validator";
+import React, { Component } from 'react';
+import Intro from './components/Intro.js';
+import * as styles from './styles.scss';
+import SignUpWithEmail from './components/SignUpWithEmail';
+import YourAddress from './components/YourAddress/index';
+import Password from './components/Password';
+import ErrorMessages from './components/ErrorMessages';
+import NextButton from './components/NextButton';
+import { Formik, Form, ErrorMessage } from 'formik';
+import validator from 'validator';
 
 class Step1 extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            tel: "",
+            firstName: '',
+            lastName: '',
+            email: '',
+            tel: '',
             errors: {},
-            autoFindAddress: "",
-            address1: "",
-            address2: "",
-            organizationName: "",
-            town: "",
-            state: "",
-            postcode: "",
+            autoFindAddress: '',
+            address1: '',
+            address2: '',
+            organizationName: '',
+            town: '',
+            state: '',
+            postcode: '',
+            password: '',
             manualAddressIsVisible: false
         };
     }
@@ -39,7 +41,7 @@ class Step1 extends Component {
         console.log(`handleNextStep`);
         // this.props.nextStep();
     };
-
+ 
     handleOnChange = event => {
         console.log(`handleOnChange`, event.target.name, event.target.value);
         event.persist();
@@ -84,8 +86,8 @@ class Step1 extends Component {
         } = this.state;
 
         return (
-            <div id="step-1" className="step" styles={styles}>
-                <div className="step-container">
+            <div id='step-1' className='step' styles={styles}>
+                <div className='step-container'>
                     <Intro />
                     <Formik
                         initialValues={{
@@ -106,31 +108,29 @@ class Step1 extends Component {
 
                             // Sign up with email validation
                             if (!values.firstName) {
-                                errors.firstName = "First name is required.";
+                                errors.firstName = 'First name is required.';
                             }
 
                             if (!values.lastName) {
-                                errors.lastName = "Last name is required.";
+                                errors.lastName = 'Last name is required.';
                             }
 
                             if (!values.email) {
-                                errors.email = "Email is required.";
+                                errors.email = 'Email is required.';
                             } else if (
                                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
                                     values.email
                                 )
                             ) {
-                                errors.email = "Invalid email address";
+                                errors.email = 'Invalid email address';
                             }
 
                             if (!values.tel) {
-                                errors.tel = "Phone number is required.";
+                                errors.tel = 'Phone number is required.';
                             } else if (
-                                !validator.isMobilePhone(values.tel, "en-AU", {
-                                    strictMode: true
-                                })
+                                !validator.isMobilePhone(values.tel, ['en-AU'], { strictMode: true})
                             ) {
-                                errors.tel = "Invalid telephone number";
+                                errors.tel = 'Invalid telephone number';
                             }
 
                             // Your address validation
@@ -140,19 +140,19 @@ class Step1 extends Component {
                                 }
                             } else {
                                 if (!values.address1) {
-                                    errors.address1 = "Address is required.";
+                                    errors.address1 = 'Address is required.';
                                 }
 
                                 if (!values.town) {
-                                    errors.town = "Town/suburb is required.";
+                                    errors.town = 'Town/suburb is required.';
                                 }
 
                                 if (!values.state) {
-                                    errors.state = "State is required.";
+                                    errors.state = 'State is required.';
                                 }
 
                                 if (!values.postcode) {
-                                    errors.postcode = "Postcode is required.";
+                                    errors.postcode = 'Postcode is required.';
                                 }
                             }
 
@@ -181,7 +181,7 @@ class Step1 extends Component {
                         }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className="flex column"
+                                className='flex column'
                             >
                                 <SignUpWithEmail
                                     firstName={values.firstName}
@@ -209,6 +209,14 @@ class Step1 extends Component {
                                     dirty={dirty}
                                     errors={errors}
                                     toggleManualAddressIsVisible={this.toggleManualAddressIsVisible}
+                                />
+                                <Password 
+                                    password={values.password}
+                                    handleOnChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    touched={touched}
+                                    dirty={dirty}
+                                    errors={errors} 
                                 />
                                 <NextButton />
                             </form>
