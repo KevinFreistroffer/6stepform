@@ -17,13 +17,13 @@ class Step1 extends Component {
             email: "",
             tel: "",
             errors: {},
-            autoFindAddress: '',
-            address1: '',
-            address2: '',
-            organizationName: '',
-            town: '',
-            state: '',
-            postcode: ''
+            autoFindAddress: "",
+            address1: "",
+            address2: "",
+            organizationName: "",
+            town: "",
+            state: "",
+            postcode: ""
         };
     }
 
@@ -58,46 +58,78 @@ class Step1 extends Component {
     };
 
     render() {
-        const { firstName, lastName, email, tel, errors } = this.state;
+        const {
+            firstName,
+            lastName,
+            email,
+            organizationName,
+            address1,
+            address2,
+            town,
+            state,
+            postcode
+        } = this.state;
 
         return (
             <div id="step-1" className="step" styles={styles}>
                 <div className="step-container">
                     <Intro />
                     <Formik
-                        initialValues={{ firstName, lastName, email, tel }}
+                        initialValues={{
+                            firstName,
+                            lastName,
+                            email,
+                            organizationName,
+                            address1,
+                            address2,
+                            town,
+                            state,
+                            postcode
+                        }}
                         validate={values => {
                             let errors = {};
                             if (!values.firstName) {
-                                errors.firstName = 'First name is required.';
+                                errors.firstName = "First name is required.";
                             }
 
                             if (!values.lastName) {
-                                errors.lastName = 'Last name is required.';
+                                errors.lastName = "Last name is required.";
                             }
 
                             if (!values.email) {
-                                errors.email = 'Email is required.';
+                                errors.email = "Email is required.";
                             } else if (
                                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
                                     values.email
                                 )
                             ) {
-                                errors.email = 'Invalid email address';
+                                errors.email = "Invalid email address";
                             }
 
                             if (!values.tel) {
-                                errors.tel = 'Phone number is required.';
+                                errors.tel = "Phone number is required.";
                             } else if (
-                                !validator.isMobilePhone(
-                                    values.tel,
-                                    "en-AU",
-                                    {
-                                        strictMode: true
-                                    }
-                                )
+                                !validator.isMobilePhone(values.tel, "en-AU", {
+                                    strictMode: true
+                                })
                             ) {
                                 errors.tel = "Invalid telephone number";
+                            }
+
+                            if (!values.address1) {
+                                errors.address1 = "Address is required.";
+                            }
+
+                            if (!values.town) {
+                                errors.town = "Town/suburb is required.";
+                            }
+
+                            if (!values.state) {
+                                errors.state = "State is required.";
+                            }
+
+                            if (!values.postcode) {
+                                errors.postcode = "Postcode is required.";
                             }
 
                             return errors;
@@ -137,7 +169,6 @@ class Step1 extends Component {
                                     touched={touched}
                                     dirty={dirty}
                                     errors={errors}
-
                                 />
                                 <YourAddress
                                     autoFindAddress={values.autoFindAddress}
@@ -152,13 +183,32 @@ class Step1 extends Component {
                                     touched={touched}
                                     dirty={dirty}
                                     errors={errors}
-
                                 />
                                 <Next />
-                                {errors.firstName && touched.firstName && <div>{errors.firstName}</div>}
-                                {errors.lastName && touched.lastName && <div>{errors.lastName}</div>}
-                                {errors.email && touched.email && <div>{errors.email}</div>}
-                                {errors.tel && touched.tel && <div>{errors.tel}</div>}
+                                {errors.firstName && touched.firstName && (
+                                    <div>{errors.firstName}</div>
+                                )}
+                                {errors.lastName && touched.lastName && (
+                                    <div>{errors.lastName}</div>
+                                )}
+                                {errors.email && touched.email && (
+                                    <div>{errors.email}</div>
+                                )}
+                                {errors.tel && touched.tel && (
+                                    <div>{errors.tel}</div>
+                                )}
+                                {errors.address1 && touched.address1 && (
+                                    <div>{errors.address1}</div>
+                                )}
+                                {errors.town && touched.town && (
+                                    <div>{errors.town}</div>
+                                )}
+                                {errors.state && touched.state && (
+                                    <div>{errors.state}</div>
+                                )}
+                                {errors.postcode && touched.postcode && (
+                                    <div>{errors.postcode}</div>
+                                )}
                             </form>
                         )}
                     </Formik>
