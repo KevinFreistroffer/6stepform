@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 
 export const SignUpWithEmail = props => {
-
 	useEffect(() => {
 		console.log(props);
 	});
@@ -13,13 +12,16 @@ export const SignUpWithEmail = props => {
 				Or sign up with your email address
 			</h2>
 			<input
-			 	type="text"
+				type="text"
 				placeholder="First Name"
 				name="firstName"
 				value={props.firstName}
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
+			{props.errors.firstName && props.touched.firstName && (
+				<div className="error-message">{props.errors.firstName}</div>
+			)}
 			<input
 				type="text"
 				placeholder="Last Name"
@@ -28,6 +30,9 @@ export const SignUpWithEmail = props => {
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
+			{props.errors.lastName && props.touched.lastName && (
+				<div className="error-message">{props.errors.lastName}</div>
+			)}
 			<input
 				type="email"
 				placeholder="Email"
@@ -36,6 +41,10 @@ export const SignUpWithEmail = props => {
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
+			{props.errors.email && props.touched.email && (
+				<div className="error-message">{props.errors.email}</div>
+			)}
+
 			<div className="tel-input-container">
 				<label htmlFor="tel-input">
 					<span className="tel-input-image">temp</span>
@@ -48,6 +57,9 @@ export const SignUpWithEmail = props => {
 						onChange={props.handleOnChange}
 						onBlur={props.handleBlur}
 					/>
+					{props.errors.tel && props.touched.tel && (
+						<div className="error-message">{props.errors.tel}</div>
+					)}
 				</label>
 			</div>
 		</div>

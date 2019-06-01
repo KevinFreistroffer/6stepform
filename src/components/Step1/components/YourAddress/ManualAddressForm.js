@@ -1,36 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import React from "react";
 
-export const YourAddress = props => {
-	useEffect(() => {
-		console.log(props);
-	});
-
-	const [manualAddressIsVisible, setManualAddressIsVisible] = useState(false);
-
+const ManualAddressForm = props => {
 	return (
-		<div className="your-address section">
-			<h2 className="section--title">Your Address</h2>
-			<p>
-				We need your address so we can send you your exclusive 2019 MSWA
-				Ocean Ride fundraising rewards.
-			</p>
-			<input
-				type="text"
-				placeholder="Start typing your address"
-				name="autoFindAddress"
-				value={props.autoFindAddress}
-				onChange={props.handleOnChange}
-				onBlur={props.handleBlur}
-			/>
-			<h3
-				onClick={() => {
-					setManualAddressIsVisible(!manualAddressIsVisible);
-				}}
-			>
-				Or enter your address manually
-			</h3>
-			{manualAddressIsVisible && (
+		<>
+			{props.manualAddressIsVisible && (
 				<>
 					<input
 						type="text"
@@ -41,13 +14,18 @@ export const YourAddress = props => {
 						onBlur={props.handleBlur}
 					/>
 					<input
-						type="texts"
+						type="text"
 						placeholder="Address 1"
 						name="address1"
 						value={props.address1}
 						onChange={props.handleOnChange}
 						onBlur={props.handleBlur}
 					/>
+					{props.errors.address1 && props.touched.address1 && (
+						<div className="error-message">
+							{props.errors.address1}
+						</div>
+					)}
 					<input
 						type="text"
 						placeholder="Address 2 (optional)"
@@ -64,9 +42,17 @@ export const YourAddress = props => {
 						onChange={props.handleOnChange}
 						onBlur={props.handleBlur}
 					/>
+					{props.errors.town && props.touched.town && (
+						<div className="error-message">{props.errors.town}</div>
+					)}
 					<select>
 						<option value="State">State</option>
 					</select>
+					{props.errors.state && props.touched.state && (
+						<div className="error-message">
+							{props.errors.state}
+						</div>
+					)}
 					<input
 						type="number"
 						placeholder="Postcode"
@@ -75,10 +61,15 @@ export const YourAddress = props => {
 						onChange={props.handleOnChange}
 						onBlur={props.handleBlur}
 					/>
+					{props.errors.postcode && props.touched.postcode && (
+						<div className="error-message">
+							{props.errors.postcode}
+						</div>
+					)}
 				</>
 			)}
-		</div>
+		</>
 	);
 };
 
-export default YourAddress;
+export default ManualAddressForm;

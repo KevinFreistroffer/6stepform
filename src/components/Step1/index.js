@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Intro from "./components/Intro.js";
 import * as styles from "./styles.scss";
 import SignUpWithEmail from "./components/SignUpWithEmail";
-import YourAddress from "./components/YourAddress";
+import YourAddress from "./components/YourAddress/index";
+import ErrorMessages from "./components/ErrorMessages";
 import Next from "./components/Next";
 import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
@@ -23,8 +24,15 @@ class Step1 extends Component {
             organizationName: "",
             town: "",
             state: "",
-            postcode: ""
+            postcode: "",
+            manualAddressIsVisible: false
         };
+    }
+
+    toggleManualAddressIsVisible = () => {
+        this.setState({ 
+            manualAddressIsVisible: !this.state.manualAddressIsVisible 
+        });
     }
 
     handleNextStep = () => {
@@ -57,11 +65,16 @@ class Step1 extends Component {
         event.stopPropagation();
     };
 
+
+
     render() {
         const {
+            manualAddressIsVisible,
             firstName,
             lastName,
             email,
+            tel,
+            autoFindAddress,
             organizationName,
             address1,
             address2,
@@ -79,6 +92,8 @@ class Step1 extends Component {
                             firstName,
                             lastName,
                             email,
+                            tel,
+                            autoFindAddress,
                             organizationName,
                             address1,
                             address2,
@@ -88,6 +103,8 @@ class Step1 extends Component {
                         }}
                         validate={values => {
                             let errors = {};
+
+                            // Sign up with email validation
                             if (!values.firstName) {
                                 errors.firstName = "First name is required.";
                             }
@@ -116,20 +133,27 @@ class Step1 extends Component {
                                 errors.tel = "Invalid telephone number";
                             }
 
-                            if (!values.address1) {
-                                errors.address1 = "Address is required.";
-                            }
+                            // Your address validation
+                            if (!manualAddressIsVisible) {
+                                if (!values.autoFindAddress) {
+                                    errors.autoFindAddress = 'Address is required';
+                                }
+                            } else {
+                                if (!values.address1) {
+                                    errors.address1 = "Address is required.";
+                                }
 
-                            if (!values.town) {
-                                errors.town = "Town/suburb is required.";
-                            }
+                                if (!values.town) {
+                                    errors.town = "Town/suburb is required.";
+                                }
 
-                            if (!values.state) {
-                                errors.state = "State is required.";
-                            }
+                                if (!values.state) {
+                                    errors.state = "State is required.";
+                                }
 
-                            if (!values.postcode) {
-                                errors.postcode = "Postcode is required.";
+                                if (!values.postcode) {
+                                    errors.postcode = "Postcode is required.";
+                                }
                             }
 
                             return errors;
@@ -171,6 +195,7 @@ class Step1 extends Component {
                                     errors={errors}
                                 />
                                 <YourAddress
+                                    manualAddressIsVisible={manualAddressIsVisible}
                                     autoFindAddress={values.autoFindAddress}
                                     organizationName={values.organizationName}
                                     address1={values.address1}
@@ -183,32 +208,9 @@ class Step1 extends Component {
                                     touched={touched}
                                     dirty={dirty}
                                     errors={errors}
+                                    toggleManualAddressIsVisible={this.toggleManualAddressIsVisible}
                                 />
                                 <Next />
-                                {errors.firstName && touched.firstName && (
-                                    <div>{errors.firstName}</div>
-                                )}
-                                {errors.lastName && touched.lastName && (
-                                    <div>{errors.lastName}</div>
-                                )}
-                                {errors.email && touched.email && (
-                                    <div>{errors.email}</div>
-                                )}
-                                {errors.tel && touched.tel && (
-                                    <div>{errors.tel}</div>
-                                )}
-                                {errors.address1 && touched.address1 && (
-                                    <div>{errors.address1}</div>
-                                )}
-                                {errors.town && touched.town && (
-                                    <div>{errors.town}</div>
-                                )}
-                                {errors.state && touched.state && (
-                                    <div>{errors.state}</div>
-                                )}
-                                {errors.postcode && touched.postcode && (
-                                    <div>{errors.postcode}</div>
-                                )}
                             </form>
                         )}
                     </Formik>
