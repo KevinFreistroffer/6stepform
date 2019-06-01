@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 
 export const YourAddress = props => {
@@ -6,6 +6,8 @@ export const YourAddress = props => {
 	useEffect(() => {
 		console.log(props);
 	});
+
+	const [manualAddressIsVisible, setManualAddressIsVisible] = useState(false);
 
 	return (
 		<div className="your-address section">
@@ -21,8 +23,14 @@ export const YourAddress = props => {
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
-			<h3>Or enter your address manually</h3>
-			<input
+			<h3 onClick={() => {
+				setManualAddressIsVisible(!manualAddressIsVisible);
+			}}>Or enter your address manually</h3>
+			{
+				manualAddressIsVisible && 			
+
+				<>
+								<input
 				type="text"
 				placeholder="Organization name (optional)"
 				name="organization-name"
@@ -54,7 +62,10 @@ export const YourAddress = props => {
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
-			// Select
+			// Select State needed
+			<select>
+				<option value='State'>State</option>
+			</select>
 			<input
 				type="number"
 				placeholder="Postcode"
@@ -63,8 +74,10 @@ export const YourAddress = props => {
 				onChange={props.handleOnChange}
 				onBlur={props.handleBlur}
 			/>
+				</>
+			}
 		</div>
 	);
 };
 
-export default <YourAddressx></YourAddressx>;
+export default YourAddress;

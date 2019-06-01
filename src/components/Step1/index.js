@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Intro from "./components/Intro.js";
 import * as styles from "./styles.scss";
 import SignUpWithEmail from "./components/SignUpWithEmail";
+import YourAddress from "./components/YourAddress";
 import Next from "./components/Next";
 import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
@@ -15,7 +16,14 @@ class Step1 extends Component {
             lastName: "",
             email: "",
             tel: "",
-            errors: {}
+            errors: {},
+            autoFindAddress: '',
+            address1: '',
+            address2: '',
+            organizationName: '',
+            town: '',
+            state: '',
+            postcode: ''
         };
     }
 
@@ -124,6 +132,21 @@ class Step1 extends Component {
                                     lastName={values.lastName}
                                     email={values.email}
                                     tel={values.tel}
+                                    handleOnChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    touched={touched}
+                                    dirty={dirty}
+                                    errors={errors}
+
+                                />
+                                <YourAddress
+                                    autoFindAddress={values.autoFindAddress}
+                                    organizationName={values.organizationName}
+                                    address1={values.address1}
+                                    address2={values.address2}
+                                    town={values.town}
+                                    state={values.state}
+                                    postcode={values.postcode}
                                     handleOnChange={handleChange}
                                     handleBlur={handleBlur}
                                     touched={touched}
