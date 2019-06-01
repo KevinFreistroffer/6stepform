@@ -1,64 +1,70 @@
-import React from 'react';
-import {Formik} from 'formik';
+import React, { useEffect } from "react";
+import { Formik, Field, ErrorMessage } from "formik";
 
-export const YourAdd = props => {
-	return(
-		<div className="sign-up-with-email section"> 
-			<h2 className="section--title">Or sign up with your email address</h2>
-			<Formik
-				initialValues={{
-					firstName: '',
-					lastName: '',
-					email: '',
-					telephone: ''
-				}}
-				validate={values => {
-					let errors = {};
-					if (!values.firstName) {
-						errors.firstName = 'Required';
-					}
+export const YourAddress = props => {
 
-					if (!values.lastName) {
-						errors.firstName = 'Required';
-					}
+	useEffect(() => {
+		console.log(props);
+	});
 
-					if (!values.email) {
-						errors.firstName = 'Required';
-					} else if (
-          				!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        			) {
-        				error.email = 'Invalid email address';
-        			}
-
-					if (!values.telephone) {
-						errors.firstName = 'Required';
-					}
-				}}
-				onSubmit={(values, { setSubmitting }) => {
-					setTimeout(() => {
-						alert(JSON.stringify(values, null, 2));
-						setSubmitting(false);
-					}, 400);
-				}}
-			>
-				<form className="flex column" >
-					<input type="text" 
-					       placeholder="First Name" 
-					       name="first-name-input" 
-					       onChange={event => console.log(event)} />
-					<input type="text" placeholder="Last Name" name="last-name" onChange={event => console.log(event)} />
-					<input type="email" placeholder="Email" name="email" onChange={event => console.log(event)} />
-					<div className="tel-input-container"> 
-						<label htmlFor="tel-input">
-							<span class="tel-input-image">temp</span>
-							<input id="tel-input" type="tel" placeholder="+61" name="tel" onChange={event => console.log(event)} />
-						</label>
-					</div>
-				</form>
-			</Formik>
+	return (
+		<div className="your-address section">
+			<h2 className="section--title">
+				Your Address
+			</h2>
+			<p>We need your address so we can send you your exclusive 2019 MSWA Ocean Ride fundraising rewards.</p>
+			<input
+			 	type="text"
+				placeholder="Start typing your address"
+				name="autoFindAddress"
+				value={props.autoFindAddress}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
+			<h3>Or enter your address manually</h3>
+			<input
+				type="text"
+				placeholder="Organization name (optional)"
+				name="organization-name"
+				value={props.organizationName}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
+			<input
+				type="texts"
+				placeholder="Address 1"
+				name="address1"
+				value={props.address1}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
+			<input
+				type="text"
+				placeholder="Address 2 (optional)"
+				name="address2"
+				value={props.address2}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
+			<input
+				type="text"
+				placeholder="Town/suburb"
+				name="town"
+				value={props.town}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
+			// Select
+			<input
+				type="number"
+				placeholder="Postcode"
+				name="postcode"
+				value={props.postcode}
+				onChange={props.handleOnChange}
+				onBlur={props.handleBlur}
+			/>
 		</div>
 	);
 };
 
-
-export default SignUpWithEmail;
+export default <YourAddressx></YourAddressx>;

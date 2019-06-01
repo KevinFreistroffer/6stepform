@@ -11,7 +11,14 @@ export class App extends Component{
 
     this.state = {
       headerDate: 'November 23, 2019456',
-      currentStep: 1
+      currentStep: 1,
+      step1: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        tel: '',
+        isValid: false
+      }
     };
   }
 

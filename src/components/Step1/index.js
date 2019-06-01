@@ -3,7 +3,7 @@ import Intro from "./components/Intro.js";
 import * as styles from "./styles.scss";
 import SignUpWithEmail from "./components/SignUpWithEmail";
 import Next from "./components/Next";
-import { Formik } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
 
 class Step1 extends Component {
@@ -14,7 +14,8 @@ class Step1 extends Component {
             firstName: "",
             lastName: "",
             email: "",
-            tel: ""
+            tel: "",
+            errors: {}
         };
     }
 
@@ -24,91 +25,120 @@ class Step1 extends Component {
     };
 
     handleOnChange = event => {
-        console.log(`handleOnChange`, event);
+        console.log(`handleOnChange`, event.target.name, event.target.value);
+        event.persist();
 
-        /*
-            this.state({
-                [event.target.name]: event.target.value
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+    handleSubmit = event => {
+        const { firstName, lastName, email, tel } = this.state;
+        const errors = this.validate(firstName, lastName, email, tel);
+
+        if (Object.keys(errors).length === 0) {
+            console.log(`no errors`);
+            //this.nextStep();
+        } else {
+            // This originally was at the end of validate();
+            this.setState({
+                step1: { ...this.state.step1, errors }
             });
-        */
+        }
+        event.stopPropagation();
     };
 
     render() {
+        const { firstName, lastName, email, tel, errors } = this.state;
+
         return (
             <div id="step-1" className="step" styles={styles}>
                 <div className="step-container">
+                    <Intro />
                     <Formik
-                        validate
-                        initialValues={{
-                            firstName: "",
-                            lastName: "",
-                            email: "",
-                            tel: ""
-                        }}
+                        initialValues={{ firstName, lastName, email, tel }}
                         validate={values => {
                             let errors = {};
                             if (!values.firstName) {
-                                errors.firstName = "Required";
+                                errors.firstName = 'First name is required.';
                             }
 
                             if (!values.lastName) {
-                                errors.lastName = "Required";
+                                errors.lastName = 'Last name is required.';
                             }
 
                             if (!values.email) {
-                                errors.email = "Required";
+                                errors.email = 'Email is required.';
                             } else if (
                                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
                                     values.email
                                 )
                             ) {
-                                errors.email = "Invalid email address";
+                                errors.email = 'Invalid email address';
                             }
 
                             if (!values.tel) {
-                                errors.tel = "Required";
+                                errors.tel = 'Phone number is required.';
                             } else if (
-                                !validator.isMobilePhoneLocales(
+                                !validator.isMobilePhone(
                                     values.tel,
                                     "en-AU",
-                                    { strictMode: true }
+                                    {
+                                        strictMode: true
+                                    }
                                 )
                             ) {
                                 errors.tel = "Invalid telephone number";
                             }
+
+                            return errors;
+                        }}
+                        handleBlur={() => {
+                            console.log(`handleBlur`);
                         }}
                         onSubmit={(values, { setSubmitting }) => {
-                            // setTimeout(() => {
-                            //     alert(JSON.stringify(values, null, 2));
-                            //     setSubmitting(false);
-                            // }, 400);
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                                setSubmitting(false);
+                            }, 400);
                         }}
-                        render={({
+                    >
+                        {({
                             values,
                             errors,
-                            status,
                             touched,
-                            handleBlur,
+                            dirty,
                             handleChange,
+                            handleBlur,
                             handleSubmit,
                             isSubmitting
+                            /* and other goodies */
                         }) => (
-                            <>
-                                <Intro />
+                            <form
+                                onSubmit={handleSubmit}
+                                className="flex column"
+                            >
                                 <SignUpWithEmail
                                     firstName={values.firstName}
                                     lastName={values.lastName}
                                     email={values.email}
                                     tel={values.tel}
+                                    handleOnChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    touched={touched}
+                                    dirty={dirty}
+                                    errors={errors}
+
                                 />
-                                <Next
-                                    nextStep={() => {
-                                        handleSubmit();
-                                    }}
-                                />
-                            </>
+                                <Next />
+                                {errors.firstName && touched.firstName && <div>{errors.firstName}</div>}
+                                {errors.lastName && touched.lastName && <div>{errors.lastName}</div>}
+                                {errors.email && touched.email && <div>{errors.email}</div>}
+                                {errors.tel && touched.tel && <div>{errors.tel}</div>}
+                            </form>
                         )}
-                    />
+                    </Formik>
                 </div>
             </div>
         );
