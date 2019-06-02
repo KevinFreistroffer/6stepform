@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { Formik, Field, ErrorMessage } from "formik";
 
 export const SignUpWithEmail = props => {
@@ -60,7 +62,6 @@ export const SignUpWithEmail = props => {
 			</FormControl>
 
 			<FormControl className="tel-form-control" fullWidth={true}>
-					<span className="tel-input-image">temp</span>
 					<TextField
 						type="tel"
 						label="Phone Number"
@@ -71,6 +72,19 @@ export const SignUpWithEmail = props => {
 						onBlur={props.handleBlur}
 						margin="normal"
 						variant="outlined"
+						InputProps={{
+							startAdornment: (
+								<InputAdornment >
+									<IconButton
+										edge="end"
+										size="medium"
+										aria-label="Phone number"
+									>
+										TODO:addImage
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 					{props.errors.tel && props.touched.tel && (
 						<div className="error-message">{props.errors.tel}</div>
