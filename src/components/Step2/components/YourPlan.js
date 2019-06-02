@@ -14,6 +14,10 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 export const YourPlan = props => {
+
+	useEffect(() => {
+		console.log(props.plan);
+	});
 	return (
 		<div className="your-plan section">
 			<h2 className="section--title">
@@ -25,26 +29,28 @@ export const YourPlan = props => {
 					name="plan"
 					value={props.plan.selectedPlan}
 					onChange={props.handleOnChange}
-				>
+				>	
+
 					<FormControlLabel
 						value="onMyOwn"
 						control={<Radio />}
 						label="On my own (you can join a team later if you wish)"
 					/>
-
+					
 					<FormControl fullWidth={true}>
 						<FormControlLabel
 							value="joinExistingTeam"
 							control={<Radio />}
 							label="I want to join an existing team"
 						/>
+
 						{props.plan.selectedPlan === "joinExistingTeam" && (
 							<TextField
 								type="search"
 								label="Find your team"
 								placeholder="Find your team"
 								name="find-your-team"
-								value="findYourTeam"
+								value={props.plan.findYourTeam.searchTerm}
 								onChange={props.handleOnChange}
 								onBlur={props.handleBlur}
 								variant="outlined"
@@ -63,26 +69,19 @@ export const YourPlan = props => {
 								}}
 							/>
 						)}
-						{
-							// TODO delete or implement something like this
-							//      to handle searching for a team
-							// onChange = term => {
-							// 	axios.get(`/myAPI?search=${term)`)
-							// 		.then(results => {
-							// 			if (results.response === 200) {
-							// 				if (results.teamIsAlreadyCreated) {
-							// 					showTeamAlreadyExistsMessage();
-							// 				} else {
-							// 				}
-							// 			}
-							// 		});
-							// }
-						}
+
+						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
+							https://github.com/jaredpalmer/formik/issues/1051
+						*/}
+						{!props.plan.joinExistingTeam.searchTerm.trim() && props.touched.plan && (
+							<div className="error-message">{props.errors.joinExistingTeam}</div>
+						)}
+
 					</FormControl>
 
 					<FormControl fullWidth={true}>
 						<FormControlLabel
-							value="set-up-new-team"
+							value="setUpNewTeam"
 							control={<Radio />}
 							label="I want to setup a new team"
 						/>
@@ -92,7 +91,7 @@ export const YourPlan = props => {
 								label="Set up a new team"
 								placeholder="Set up a new team"
 								name="set-up-new-team"
-								value={"props.setUpNewTeam"}
+								value={props.plan.setUpNewTeam.searchTerm}
 								onChange={props.handleOnChange}
 								onBlur={props.handleBlur}
 								variant="outlined"
@@ -111,11 +110,16 @@ export const YourPlan = props => {
 								}}
 							/>
 						)}
+
+						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
+							https://github.com/jaredpalmer/formik/issues/1051
+						*/}
+
+						{!props.plan.setUpNewTeam.searchTerm.trim() && props.touched.plan && (
+							<div className="error-message">{props.errors.setUpNewTeam}</div>
+						)}
 					</FormControl>
 				</RadioGroup>
-				{props.errors.gender && props.touched.gender && (
-					<div className="error-message">{props.errors.gender}</div>
-				)}
 			</FormControl>
 		</div>
 	);
