@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 export const YourChallenge = props => {
 
 	return (
-		<div className="password section">
+		<div className="your-challenge section">
 			<h2 className="section--title">Your Challenge</h2>
 			<p>
 			What's your ride of choice for this year's event? (You can <a href="https://mswaoceanride.org.au/about/event-information" target="_blank">check out the different options and registration fees here</a>)
