@@ -49,8 +49,8 @@ export const YourPlan = props => {
 								type="search"
 								label="Find your team"
 								placeholder="Find your team"
-								name="find-your-team"
-								value={props.plan.findYourTeam.searchTerm}
+								name="join-existing-team"
+								value={props.plan.joinExistingTeam.searchTerm}
 								onChange={props.handleOnChange}
 								onBlur={props.handleBlur}
 								variant="outlined"
@@ -73,7 +73,7 @@ export const YourPlan = props => {
 						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
-						{!props.plan.joinExistingTeam.searchTerm.trim() && props.touched.plan && (
+						{!props.plan.joinExistingTeam.searchTerm.trim() && (
 							<div className="error-message">{props.errors.joinExistingTeam}</div>
 						)}
 
@@ -115,7 +115,7 @@ export const YourPlan = props => {
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
 
-						{!props.plan.setUpNewTeam.searchTerm.trim() && props.touched.plan && (
+						{!props.plan.setUpNewTeam.searchTerm.trim() && (
 							<div className="error-message">{props.errors.setUpNewTeam}</div>
 						)}
 					</FormControl>

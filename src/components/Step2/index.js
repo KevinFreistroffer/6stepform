@@ -46,7 +46,7 @@ class Step2 extends Component {
 
         event.persist();
 
-        if (event.target.name === "plan") {
+        if (name === "plan") {
             this.setState(
                 prevState => {
                     return {
@@ -55,6 +55,26 @@ class Step2 extends Component {
                 },
                 () => console.log("plan after setting state", this.state)
             );
+        } else if (name === "join-existing-team" || name === "set-up-new-team") {
+            this.setState(prevState => {
+                let newState = prevState;
+                let camelCasedName = "";
+                // Convert name to camelCase
+                name.split("-").forEach((word, index) => {
+                    index === 0
+                        ? (camelCasedName += word)
+                        : (camelCasedName +=
+                              word[0].toUpperCase() + word.slice(1));
+                });
+    
+                newState.plan[camelCasedName].searchTerm = value;
+
+                return {
+                    plan: { ...prevState.plan, ...newState.plan }
+                }
+            });
+
+
         } else {
             this.setState(
                 {
@@ -140,16 +160,20 @@ class Step2 extends Component {
                                 errors.gender = "Gender is required.";
                             }
 
-                            if (values.plan.selectedPlan == 'joinExistingTeam') {
+                            if (
+                                values.plan.selectedPlan === "joinExistingTeam"
+                            ) {
                                 if (!values.plan.joinExistingTeam.searchTerm) {
-                                    errors.joinExistingTeam = 'This field is required for your chosen selection.'
-                                } 
+                                    errors.joinExistingTeam =
+                                        "This field is required for your chosen selection.";
+                                }
                             }
 
-                            if (values.plan.selectedPlan == 'setUpNewTeam') {
+                            if (values.plan.selectedPlan === "setUpNewTeam") {
                                 if (!values.plan.setUpNewTeam.searchTerm) {
-                                    errors.setUpNewTeam = 'This field is required for your chosen selection.'
-                                } 
+                                    errors.setUpNewTeam =
+                                        "This field is required for your chosen selection.";
+                                }
                             }
 
                             return errors;
@@ -176,38 +200,38 @@ class Step2 extends Component {
                         }) => {
                             console.log(values);
                             return (
-                            <form
-                                onSubmit={handleSubmit}
-                                className="flex column"
-                            >
-                                <YourChallenge
-                                    challenge={values.challenge}
-                                    errors={errors}
-                                    touched={touched}
-                                    handleOnChange={handleChange}
-                                    handleBlur={handleBlur}
-                                />
-                                <YourDetails
-                                    dateOfBirth={values.dateOfBirth}
-                                    gender={values.gender}
-                                    errors={errors}
-                                    touched={touched}
-                                    handleOnChange={handleChange}
-                                    handleBlur={handleBlur}
-                                />
-                                <YourPlan
-                                    plan={this.state.plan}
-                                    errors={errors}
-                                    touched={touched}
-                                    handleOnChange={event => {
-                                        handleChange(event);
-                                        this.handleOnChange(event);
-                                    }}
-                                    handleBlur={handleBlur}
-                                />
-                                <NextButton />
-                            </form>
-                        )
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="flex column"
+                                >
+                                    <YourChallenge
+                                        challenge={values.challenge}
+                                        errors={errors}
+                                        touched={touched}
+                                        handleOnChange={handleChange}
+                                        handleBlur={handleBlur}
+                                    />
+                                    <YourDetails
+                                        dateOfBirth={values.dateOfBirth}
+                                        gender={values.gender}
+                                        errors={errors}
+                                        touched={touched}
+                                        handleOnChange={handleChange}
+                                        handleBlur={handleBlur}
+                                    />
+                                    <YourPlan
+                                        plan={this.state.plan}
+                                        errors={errors}
+                                        touched={touched}
+                                        handleOnChange={event => {
+                                            handleChange(event);
+                                            this.handleOnChange(event);
+                                        }}
+                                        handleBlur={handleBlur}
+                                    />
+                                    <NextButton />
+                                </form>
+                            );
                         }}
                     </Formik>
                 </div>
