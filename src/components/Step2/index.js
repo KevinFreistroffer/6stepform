@@ -15,10 +15,21 @@ class Step2 extends Component {
         this.state = {
             challenge: '',
             dateOfBirth: '',
-            gender: ''
+            gender: '',
+            plan: {
+                selectedPlan: 'onMyOwn',
+                joinExistingTeam: {
+                    searchTerm: '',
+                    team: ''
+                },  
+                setUpNewTeam: {
+                    searchTerm: '',
+                    team: ''
+                }
+            },
         };
 
-        this.dobPattern = new RegExp("^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$")
+        this.dobPattern = new RegExp("^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)+[0-9]{2})*$")
 
     }
 
@@ -37,23 +48,27 @@ class Step2 extends Component {
     };
 
     handleSubmit = event => {
-        const { firstName, lastName, email, tel } = this.state;
-        const errors = this.validate(firstName, lastName, email, tel);
-
-        // if (Object.keys(errors).length === 0) {
-        //     console.log(`no errors`);
-        //     //this.nextStep();
-        // } else {
-        //     // This originally was at the end of validate();
-        //     this.setState({
-        //         step1: { ...this.state.step1, errors }
-        //     });
-        // }
-        // event.stopPropagation();
+        const { 
+            challenge,
+            dateOfBirth,
+            gender,
+            plan,
+        } = this.state;
+        const errors = this.validate(
+            challenge,
+            dateOfBirth,
+            gender,
+            plan,
+        );
     };
 
     render() {
-        const { challenge, dateOfBirth, gender } = this.state;
+        const {             
+            challenge,
+            dateOfBirth,
+            gender,
+            plan,
+        } = this.state;
 
         return (
             <div id="step-2" className="step" styles={styles}>
@@ -69,7 +84,8 @@ class Step2 extends Component {
                         initialValues={{
                             challenge,
                             dateOfBirth,
-                            gender
+                            gender,
+                            plan
                         }}
                         validate={values => {
                             let errors = {};
@@ -107,16 +123,6 @@ class Step2 extends Component {
                                 errors.gender =
                                     "Gender is required.";
                             }
-
-                            // if (!values.email) {
-                            //     errors.email = 'Email is required.';
-                            // } else if (
-                            //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                            //         values.email
-                            //     )
-                            // ) {
-                            //     errors.email = 'Invalid email address';
-                            // }
 
                             return errors;
                         }}
@@ -163,7 +169,10 @@ class Step2 extends Component {
                                     plan={values.plan}
                                     errors={errors}
                                     touched={touched}
-                                    handleOnChange={handleChange}
+                                    handleOnChange={(event) => {
+                                        handleChange(event);
+                                        this.handleOnChange(event);
+                                    }}
                                     handleBlur={handleBlur}
                                 />
                                 <NextButton />

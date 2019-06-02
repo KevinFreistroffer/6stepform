@@ -51,8 +51,10 @@ export class App extends Component{
           date={this.state.headerDate}>
         </HeaderComponent>
         <Step2 nextStep={this.nextStep}></Step2>
-        {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
+      {/*
+              {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
         {currentStep === 2 && <Step2 nextStep={this.nextStep}></Step2>} 
+      */}
       </div>
     );
   }
