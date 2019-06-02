@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import ManualAddressForm from "./ManualAddressForm";
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 
 export const YourAddress = props => {
-	useEffect(() => {
-		console.log(props);
-	});
-
 	return (
 		<div className="your-address section">
 			<h2 className="section--title">Your Address</h2>
@@ -14,22 +12,22 @@ export const YourAddress = props => {
 				We need your address so we can send you your exclusive 2019 MSWA
 				Ocean Ride fundraising rewards.
 			</p>
-			<input
-				type="text"
-				placeholder="Start typing your address"
-				name="autoFindAddress"
-				value={props.autoFindAddress}
-				onChange={event => {
-					props.toggleManualAddressIsVisible(event.target.name);
-					props.handleOnChange(event);
-				}}
-				onBlur={props.handleBlur}
-			/>
-			{props.errors.autoFindAddress && props.touched.autoFindAddress && (
-				<div className="error-message">
-					{props.errors.autoFindAddress}
-				</div>
-			)}
+			<FormControl fullWidth={true}>
+				<TextField
+					type="text"
+					placeholder="Start typing your address"
+					name="autoFindAddress"
+					label="Auto find address"
+					value={props.firstName}
+					onChange={props.handleOnChange}
+					onBlur={props.handleBlur}
+					margin="normal"
+					variant="outlined"
+				/>
+				{props.errors.autoFindAddress && props.touched.autoFindAddress && (
+					<div className="error-message">{props.errors.autoFindAddress}</div>
+				)}
+			</FormControl>
 			<h3 onClick={props.toggleManualAddressIsVisible}>
 				Or enter your address manually
 			</h3>

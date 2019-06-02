@@ -156,16 +156,21 @@ class Step1 extends Component {
                                 }
                             }
 
+                            if (!values.password) {
+                                errors.password = 'Password is required.';
+                            } else if (values.password.length < 6) {
+                                errors.password = "Password must be at least 6 characters in length."
+                            }
+
                             return errors;
                         }}
                         handleBlur={() => {
                             console.log(`handleBlur`);
                         }}
                         onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
+                            // Form is valid
+                            this.nextStep();
+                            setSubmitting(false);
                         }}
                     >
                         {({

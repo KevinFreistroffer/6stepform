@@ -1,67 +1,81 @@
 import React, { useEffect } from "react";
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import { Formik, Field, ErrorMessage } from "formik";
 
 export const SignUpWithEmail = props => {
-	useEffect(() => {
-		console.log(props);
-	});
-
 	return (
 		<div className="sign-up-with-email section">
 			<h2 className="section--title">
 				Or sign up with your email address
 			</h2>
-			<input
-				type="text"
-				placeholder="First Name"
-				name="firstName"
-				value={props.firstName}
-				onChange={props.handleOnChange}
-				onBlur={props.handleBlur}
-			/>
-			{props.errors.firstName && props.touched.firstName && (
-				<div className="error-message">{props.errors.firstName}</div>
-			)}
-			<input
-				type="text"
-				placeholder="Last Name"
-				name="lastName"
-				value={props.lastName}
-				onChange={props.handleOnChange}
-				onBlur={props.handleBlur}
-			/>
-			{props.errors.lastName && props.touched.lastName && (
-				<div className="error-message">{props.errors.lastName}</div>
-			)}
-			<input
-				type="email"
-				placeholder="Email"
-				name="email"
-				value={props.email}
-				onChange={props.handleOnChange}
-				onBlur={props.handleBlur}
-			/>
-			{props.errors.email && props.touched.email && (
-				<div className="error-message">{props.errors.email}</div>
-			)}
+			<FormControl fullWidth={true}>
+				<TextField
+					type="text"
+					label="First name"
+					placeholder="First name"
+					name="firstName"
+					value={props.firstName}
+					onChange={props.handleOnChange}
+					onBlur={props.handleBlur}
+					margin="normal"
+					variant="outlined"
+				/>
+				{props.errors.firstName && props.touched.firstName && (
+					<div className="error-message">{props.errors.firstName}</div>
+				)}
+			</FormControl>
 
-			<div className="tel-input-container">
-				<label htmlFor="tel-input">
+			<FormControl fullWidth={true}>
+				<TextField
+					type="text"
+					label="Last name"
+					placeholder="Last name"
+					name="lastName"
+					value={props.lastName}
+					onChange={props.handleOnChange}
+					onBlur={props.handleBlur}
+					margin="normal"
+					variant="outlined"
+				/>
+				{props.errors.lastName && props.touched.lastName && (
+					<div className="error-message">{props.errors.lastName}</div>
+				)}
+			</FormControl>
+			<FormControl fullWidth={true}>
+				<TextField
+					type="email"
+					label="Email"
+					placeholder="Email"
+					name="email"
+					value={props.email}
+					onChange={props.handleOnChange}
+					onBlur={props.handleBlur}
+					margin="normal"
+					variant="outlined"
+				/>
+				{props.errors.email && props.touched.email && (
+					<div className="error-message">{props.errors.email}</div>
+				)}
+			</FormControl>
+
+			<FormControl className="tel-form-control" fullWidth={true}>
 					<span className="tel-input-image">temp</span>
-					<input
-						id="tel-input"
+					<TextField
 						type="tel"
-						placeholder="+61"
+						label="Phone Number"
+						placeholder="Phone Number"
 						name="tel"
 						value={props.tel}
 						onChange={props.handleOnChange}
 						onBlur={props.handleBlur}
+						margin="normal"
+						variant="outlined"
 					/>
 					{props.errors.tel && props.touched.tel && (
 						<div className="error-message">{props.errors.tel}</div>
 					)}
-				</label>
-			</div>
+			</FormControl>
 		</div>
 	);
 };
