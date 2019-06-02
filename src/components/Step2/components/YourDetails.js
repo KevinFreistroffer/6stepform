@@ -30,16 +30,16 @@ export const YourDetails = props => {
 						)
 					}}
 				/>
-				{props.errors.dateOfBirth && props.touched.dateOfBirth && (
-					<div className="error-message">
-						{props.errors.dateOfBirth}
-					</div>
-				)}
-				{props.dateOfBirth && 				<p className="dob-helper-text">
+				{props.errors.dateOfBirth && props.touched.dateOfBirth && 
+				 (<div className="error-message">{props.errors.dateOfBirth}</div>)
+				}
+				{props.dateOfBirth && 
+				 <p className="dob-helper-text">
 					<span>Note:</span> all riders under the age of 18 are the
 					responsibility of their guardian, and are expected to remain
 					with them throughout the ride.
-				</p>}
+				 </p>
+				}
 			</FormControl>
 
 			<FormControl component="fieldset" fullWidth={true}>
