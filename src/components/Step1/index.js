@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Intro from './components/Intro.js';
 import * as styles from './styles.scss';
+import StepHeader from '../StepHeader.js';
 import SignUpWithEmail from './components/SignUpWithEmail';
 import YourAddress from './components/YourAddress/index';
 import Password from './components/Password';
@@ -8,6 +8,7 @@ import ErrorMessages from './components/ErrorMessages';
 import NextButton from './components/NextButton';
 import { Formik, Form, ErrorMessage } from 'formik';
 import validator from 'validator';
+import Button from '@material-ui/core/Button';
 
 class Step1 extends Component {
     constructor(props) {
@@ -89,7 +90,13 @@ class Step1 extends Component {
         return (
             <div id='step-1' className='step' styles={styles}>
                 <div className='step-container'>
-                    <Intro />
+                    <StepHeader>
+                        <h1>JOIN US!</h1>
+                        <p className="text">Thank you for choosing to be part of the 2019 MSWA Ocean Ride – Powered by RetraVision! By getting involved, you’ll be helping to support the thousands of people living with MS and all neurological conditions in Western Australia.
+                        </p>
+                        <p className="text">The first step is easy! Just fill in your details below to reserve your place in this year's challenge!</p>
+                        <Button variant="contained"  type="button" className="facebook">SIGN UP WITH FACEBOOK</Button>
+                    </StepHeader>
                     <Formik
                         initialValues={{
                             firstName,

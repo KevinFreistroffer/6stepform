@@ -1,66 +1,12 @@
-#step-1 {
+#step-2 {
 	.form-control {
 		display: block !important;
 		width: 100%;	
 	}
-	.intro {
-		h1 {
-			text-align: center;
+
+	.your-details {
+		.dob-helper-text {
+			span { font-weight: bold; }
 		}
-		p.text {
-			margin-bottom: 1.5rem;
-			text-align: left;
-		}
-		p.text:first-child {
-		}
-		p.text:last-child {
-			
-		}
-
-		button.facebook {
-			width: 100%;
-			padding: 0.5rem;
-			margin: 0 auto;
-			background-color: transparent;
-			border: 1px solid black;
-		}
-	}
-
-	.sign-up-with-email {
-		.email-form-control {
-			position: relative;
-		}
-
-
-		.tel-input-container {
-			width: 100%;
-			position: relative;
-
-			label {
-			
-				input {
-					padding-left: 3rem;
-				}
-
-				.tel-input-image {
-					position: absolute;
-					left: 0.2rem;
-				}	
-			}
-
-
-		}
-	}
-
-	.your-address {
-		h3 {
-			font-size: 1rem;
-			text-decoration: underline;
-			cursor: pointer;
-		}
-	}
-
-	.password {
-
 	}
 }

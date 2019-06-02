@@ -96,7 +96,6 @@ const ManualAddressForm = props => {
 					State
 				</InputLabel>
 				<Select 
-					native
 					id="state-select" 
 					name="state" 
 					open={selectOpen}

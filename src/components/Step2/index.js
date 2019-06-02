@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
-import Intro from './components/Intro.js';
-import * as styles from './styles.scss';
-import YourChallenge from './components/YourChallenge';
-import NextButton from './components/NextButton';
-import { Formik, Form, ErrorMessage } from 'formik';
-import validator from 'validator';
+import React, { Component } from "react";
+import * as styles from "./styles.scss";
+import StepHeader from "../StepHeader";
+import YourChallenge from "./components/YourChallenge";
+import YourDetails from "./components/YourDetails";
+import NextButton from "./components/NextButton";
+import { Formik, Form, ErrorMessage } from "formik";
+import validator from "validator";
 
 class Step2 extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            challenge: '',
+            challenge: "",
+            dateOfBirth: ""
         };
     }
 
@@ -19,7 +21,7 @@ class Step2 extends Component {
         console.log(`handleNextStep`);
         // this.props.nextStep();
     };
- 
+
     handleOnChange = event => {
         console.log(`handleOnChange`, event.target.name, event.target.value);
         event.persist();
@@ -45,80 +47,46 @@ class Step2 extends Component {
         // event.stopPropagation();
     };
 
-
-
     render() {
-        const {
-            challenge
-        } = this.state;
+        const { challenge, dateOfBirth } = this.state;
 
         return (
-            <div id='step-1' className='step' styles={styles}>
-                <div className='step-container'>
-                Step2
-                    <Intro />
+            <div id="step-2" className="step" styles={styles}>
+                <div className="step-container">
+                    <StepHeader>
+                        <h1>YOUR RIDE!</h1>
+                        <p>
+                            Next we need to know how you're planning to take
+                            part in the 2019 MSWA Ocean Ride.
+                        </p>
+                    </StepHeader>
                     <Formik
                         initialValues={{
-                            challenge
+                            challenge,
+                            dateOfBirth
                         }}
                         validate={values => {
                             let errors = {};
 
                             // Sign up with email validation
-                            if (!values.firstName) {
-                                errors.firstName = 'First name is required.';
+                            if (!values.challenge) {
+                                errors.challenge = "Please select a challenge.";
                             }
 
-                            if (!values.lastName) {
-                                errors.lastName = 'Last name is required.';
+                            if (!values.dateOfBirth) {
+                                errors.dateOfBirth =
+                                    "Date of birth is required.";
                             }
 
-                            if (!values.email) {
-                                errors.email = 'Email is required.';
-                            } else if (
-                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                                    values.email
-                                )
-                            ) {
-                                errors.email = 'Invalid email address';
-                            }
-
-                            if (!values.tel) {
-                                errors.tel = 'Phone number is required.';
-                            } else if (
-                                !validator.isMobilePhone(values.tel, ['en-AU'], { strictMode: true})
-                            ) {
-                                errors.tel = 'Invalid telephone number';
-                            }
-
-                            // Your address validation
-                            if (!manualAddressIsVisible) {
-                                if (!values.autoFindAddress) {
-                                    errors.autoFindAddress = 'Address is required';
-                                }
-                            } else {
-                                if (!values.address1) {
-                                    errors.address1 = 'Address is required.';
-                                }
-
-                                if (!values.town) {
-                                    errors.town = 'Town/suburb is required.';
-                                }
-
-                                if (!values.state) {
-                                    errors.state = 'State is required.';
-                                }
-
-                                if (!values.postcode) {
-                                    errors.postcode = 'Postcode is required.';
-                                }
-                            }
-
-                            if (!values.password) {
-                                errors.password = 'Password is required.';
-                            } else if (values.password.length < 6) {
-                                errors.password = "Password must be at least 6 characters in length."
-                            }
+                            // if (!values.email) {
+                            //     errors.email = 'Email is required.';
+                            // } else if (
+                            //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                            //         values.email
+                            //     )
+                            // ) {
+                            //     errors.email = 'Invalid email address';
+                            // }
 
                             return errors;
                         }}
@@ -144,10 +112,21 @@ class Step2 extends Component {
                         }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className='flex column'
+                                className="flex column"
                             >
-                                <YourChallenge 
+                                <YourChallenge
                                     challenge={values.challenge}
+                                    errors={errors}
+                                    touched={touched}
+                                    handleOnChange={handleChange}
+                                    handleBlur={handleBlur}
+                                />
+                                <YourDetails
+                                    dateOfBirth={values.dateOfBirth}
+                                    errors={errors}
+                                    touched={touched}
+                                    handleOnChange={handleChange}
+                                    handleBlur={handleBlur}
                                 />
                                 <NextButton />
                             </form>

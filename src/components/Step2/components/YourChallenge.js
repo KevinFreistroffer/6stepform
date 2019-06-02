@@ -8,8 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 export const YourChallenge = props => {
 
-	const { selectOpen, setSelectOpen } = useState(false);
-
 	return (
 		<div className="password section">
 			<h2 className="section--title">Your Challenge</h2>
@@ -21,19 +19,14 @@ export const YourChallenge = props => {
 					Challenge
 				</InputLabel>
 				<Select 
-					native
 					id="challenge-select" 
-					name="challenge" 
-					open={selectOpen}
-					onClose={() => setSelectOpen(false)}
-					onOpen={() => setSelectOpen(true)}
+					name="challenge"
 					onChange={props.handleOnChange}
+					value={props.challenge}
 					input={
 	            		<OutlinedInput name="challenge" />
 	          		}
 				>
-
-					<MenuItem value="" />
 					<MenuItem value="10km">10km (family) ride (no age restriction)</MenuItem>
 					<MenuItem value="30km">30km ride (12 years or over)</MenuItem>
 					<MenuItem value="50km">50km ride (12 years or over)</MenuItem>
@@ -42,8 +35,8 @@ export const YourChallenge = props => {
 					<MenuItem value="120km">120km (18 years or over)</MenuItem>
 	
 				</Select>
-				{props.errors.state && props.touched.state && (
-					<div className="error-message">{props.errors.state}</div>
+				{props.errors.challenge && props.touched.challenge && (
+					<div className="error-message">{props.errors.challenge}</div>
 				)}
 			</FormControl>
 		</div>
