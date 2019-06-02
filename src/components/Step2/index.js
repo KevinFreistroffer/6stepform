@@ -1,45 +1,23 @@
 import React, { Component } from 'react';
 import Intro from './components/Intro.js';
 import * as styles from './styles.scss';
-import SignUpWithEmail from './components/SignUpWithEmail';
-import YourAddress from './components/YourAddress/index';
-import Password from './components/Password';
-import ErrorMessages from './components/ErrorMessages';
+import YourChallenge from './components/YourChallenge';
 import NextButton from './components/NextButton';
 import { Formik, Form, ErrorMessage } from 'formik';
 import validator from 'validator';
 
-class Step1 extends Component {
+class Step2 extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            tel: '',
-            errors: {},
-            autoFindAddress: '',
-            address1: '',
-            address2: '',
-            organizationName: '',
-            town: '',
-            state: '',
-            postcode: '',
-            password: '',
-            manualAddressIsVisible: false
+            challenge: '',
         };
-    }
-
-    toggleManualAddressIsVisible = (inputName = '') => {
-        this.setState({ 
-            manualAddressIsVisible: !this.state.manualAddressIsVisible 
-        });
     }
 
     handleNextStep = () => {
         console.log(`handleNextStep`);
-        this.props.nextStep();
+        // this.props.nextStep();
     };
  
     handleOnChange = event => {
@@ -55,55 +33,33 @@ class Step1 extends Component {
         const { firstName, lastName, email, tel } = this.state;
         const errors = this.validate(firstName, lastName, email, tel);
 
-        if (Object.keys(errors).length === 0) {
-            console.log(`no errors`);
-            //this.nextStep();
-        } else {
-            // This originally was at the end of validate();
-            this.setState({
-                step1: { ...this.state.step1, errors }
-            });
-        }
-        event.stopPropagation();
+        // if (Object.keys(errors).length === 0) {
+        //     console.log(`no errors`);
+        //     //this.nextStep();
+        // } else {
+        //     // This originally was at the end of validate();
+        //     this.setState({
+        //         step1: { ...this.state.step1, errors }
+        //     });
+        // }
+        // event.stopPropagation();
     };
 
 
 
     render() {
         const {
-            manualAddressIsVisible,
-            firstName,
-            lastName,
-            email,
-            tel,
-            autoFindAddress,
-            organizationName,
-            address1,
-            address2,
-            town,
-            state,
-            postcode,
-            password
+            challenge
         } = this.state;
 
         return (
             <div id='step-1' className='step' styles={styles}>
                 <div className='step-container'>
+                Step2
                     <Intro />
                     <Formik
                         initialValues={{
-                            firstName,
-                            lastName,
-                            email,
-                            tel,
-                            autoFindAddress,
-                            organizationName,
-                            address1,
-                            address2,
-                            town,
-                            state,
-                            postcode,
-                            password
+                            challenge
                         }}
                         validate={values => {
                             let errors = {};
@@ -171,7 +127,7 @@ class Step1 extends Component {
                         }}
                         onSubmit={(values, { setSubmitting }) => {
                             // Form is valid
-                            this.handleNextStep();
+                            this.nextStep();
                             setSubmitting(false);
                         }}
                     >
@@ -190,40 +146,8 @@ class Step1 extends Component {
                                 onSubmit={handleSubmit}
                                 className='flex column'
                             >
-                                <SignUpWithEmail
-                                    firstName={values.firstName}
-                                    lastName={values.lastName}
-                                    email={values.email}
-                                    tel={values.tel}
-                                    handleOnChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    touched={touched}
-                                    dirty={dirty}
-                                    errors={errors}
-                                />
-                                <YourAddress
-                                    manualAddressIsVisible={manualAddressIsVisible}
-                                    autoFindAddress={values.autoFindAddress}
-                                    organizationName={values.organizationName}
-                                    address1={values.address1}
-                                    address2={values.address2}
-                                    town={values.town}
-                                    state={values.state}
-                                    postcode={values.postcode}
-                                    handleOnChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    touched={touched}
-                                    dirty={dirty}
-                                    errors={errors}
-                                    toggleManualAddressIsVisible={this.toggleManualAddressIsVisible}
-                                />
-                                <Password 
-                                    password={values.password}
-                                    handleOnChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    touched={touched}
-                                    dirty={dirty}
-                                    errors={errors} 
+                                <YourChallenge 
+                                    challenge={values.challenge}
                                 />
                                 <NextButton />
                             </form>
@@ -235,4 +159,4 @@ class Step1 extends Component {
     }
 }
 
-export default Step1;
+export default Step2;

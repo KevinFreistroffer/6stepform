@@ -92,9 +92,6 @@ const ManualAddressForm = props => {
 			</FormControl>
 
 			<FormControl fullWidth={true}>
-
-			</FormControl>
-			<FormControl fullWidth={true}>
 				<InputLabel htmlFor="outlined-age-native-simple">
 					State
 				</InputLabel>
