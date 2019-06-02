@@ -16,17 +16,9 @@ class Step2 extends Component {
             challenge: "",
             dateOfBirth: "",
             gender: "",
-            plan: {
-                selectedPlan: "onMyOwn",
-                joinExistingTeam: {
-                    searchTerm: "",
-                    team: ""
-                },
-                setUpNewTeam: {
-                    searchTerm: "",
-                    team: ""
-                }
-            }
+            selectedPlan: "onMyOwn",
+            joinExistingTeam: "",
+            setUpNewTeam: ""
         };
 
         this.dobPattern = new RegExp(
@@ -46,52 +38,27 @@ class Step2 extends Component {
 
         event.persist();
 
-        if (name === "plan") {
-            this.setState(
-                prevState => {
-                    return {
-                        plan: { ...this.state.plan, selectedPlan: value }
-                    };
-                },
-                () => console.log("plan after setting state", this.state)
-            );
-        } else if (name === "join-existing-team" || name === "set-up-new-team") {
-            this.setState(prevState => {
-                let newState = prevState;
-                let camelCasedName = "";
-                // Convert name to camelCase
-                name.split("-").forEach((word, index) => {
-                    index === 0
-                        ? (camelCasedName += word)
-                        : (camelCasedName +=
-                              word[0].toUpperCase() + word.slice(1));
-                });
-    
-                newState.plan[camelCasedName].searchTerm = value;
-
-                return {
-                    plan: { ...prevState.plan, ...newState.plan }
-                }
-            });
-
-
-        } else {
-            this.setState(
-                {
-                    [name]: value
-                },
-                () => console.log(this.state.plan)
-            );
-        }
+        this.setState(
+            {
+                [name]: value
+            },
+            () => console.log(this.state)
+        );
     };
 
     handleSubmit = event => {
-        const { challenge, dateOfBirth, gender, plan } = this.state;
-        const errors = this.validate(challenge, dateOfBirth, gender, plan);
+        //const errors = this.validate(this.state);
     };
 
     render() {
-        const { challenge, dateOfBirth, gender, plan } = this.state;
+        const {
+            challenge,
+            dateOfBirth,
+            gender,
+            selectedPlan,
+            joinExistingTeam,
+            setUpNewTeam
+        } = this.state;
 
         return (
             <div id="step-2" className="step" styles={styles}>
@@ -108,16 +75,16 @@ class Step2 extends Component {
                             challenge,
                             dateOfBirth,
                             gender,
-                            plan
+                            selectedPlan,
+                            joinExistingTeam,
+                            setUpNewTeam
                         }}
                         validate={values => {
                             console.log(values);
                             let errors = {};
 
-                            // Sign up with email validation
-                            if (!values.challenge) {
+                            if (!values.challenge)
                                 errors.challenge = "Please select a challenge.";
-                            }
 
                             if (!values.dateOfBirth) {
                                 errors.dateOfBirth =
@@ -160,17 +127,15 @@ class Step2 extends Component {
                                 errors.gender = "Gender is required.";
                             }
 
-                            if (
-                                values.plan.selectedPlan === "joinExistingTeam"
-                            ) {
-                                if (!values.plan.joinExistingTeam.searchTerm) {
+                            if (values.selectedPlan === "joinExistingTeam") {
+                                if (!values.joinExistingTeam.trim()) {
                                     errors.joinExistingTeam =
                                         "This field is required for your chosen selection.";
                                 }
                             }
 
-                            if (values.plan.selectedPlan === "setUpNewTeam") {
-                                if (!values.plan.setUpNewTeam.searchTerm) {
+                            if (values.selectedPlan === "setUpNewTeam") {
+                                if (!values.setUpNewTeam.trim()) {
                                     errors.setUpNewTeam =
                                         "This field is required for your chosen selection.";
                                 }
@@ -220,13 +185,14 @@ class Step2 extends Component {
                                         handleBlur={handleBlur}
                                     />
                                     <YourPlan
-                                        plan={this.state.plan}
+                                        selectedPlan={values.selectedPlan}
+                                        joinExistingTeam={
+                                            values.joinExistingTeam
+                                        }
+                                        setUpNewTeam={values.setUpNewTeam}
                                         errors={errors}
                                         touched={touched}
-                                        handleOnChange={event => {
-                                            handleChange(event);
-                                            this.handleOnChange(event);
-                                        }}
+                                        handleOnChange={handleChange}
                                         handleBlur={handleBlur}
                                     />
                                     <NextButton />
