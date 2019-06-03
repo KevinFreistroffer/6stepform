@@ -80,7 +80,6 @@ class Step2 extends Component {
                             setUpNewTeam
                         }}
                         validate={values => {
-                            console.log(values);
                             let errors = {};
 
                             if (!values.challenge)
@@ -143,9 +142,6 @@ class Step2 extends Component {
 
                             return errors;
                         }}
-                        handleBlur={() => {
-                            console.log(`handleBlur`);
-                        }}
                         onSubmit={(values, { setSubmitting }) => {
                             // Form is valid
                             this.nextStep();
@@ -185,15 +181,14 @@ class Step2 extends Component {
                                         handleBlur={handleBlur}
                                     />
                                     <YourPlan
-                                        selectedPlan={values.selectedPlan}
-                                        joinExistingTeam={
-                                            values.joinExistingTeam
-                                        }
+                                        selectedPlan={this.state.selectedPlan}
+                                        joinExistingTeam={values.joinExistingTeam}
                                         setUpNewTeam={values.setUpNewTeam}
                                         errors={errors}
                                         touched={touched}
-                                        handleOnChange={handleChange}
-                                        handleBlur={handleBlur}
+                                        formikHandleOnChange={handleChange}
+                                        handleOnChange={this.handleOnChange}
+                                        handleBlur={handleBlur} 
                                     />
                                     <NextButton />
                                 </form>

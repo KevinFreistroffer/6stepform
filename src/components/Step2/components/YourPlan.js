@@ -19,10 +19,13 @@ export const YourPlan = ({
 	setUpNewTeam,
 	errors,
 	touched,
+	formikHandleOnChange,
 	handleOnChange,
 	handleBlur
 }) => {
-
+	useEffect(() => {
+		console.log('selectedPlan', selectedPlan);
+	});
 	return (
 		<div className="your-plan section">
 			<h2 className="section--title">
@@ -31,9 +34,13 @@ export const YourPlan = ({
 			<FormControl component="fieldset" fullWidth={true}>
 				<RadioGroup
 					aria-label="How are you planning to take part?"
-					name="plan"
+					name="selectedPlan"
 					value={selectedPlan}
-					onChange={handleOnChange}
+					onChange={event => {
+						console.log('onChange', event.target.name, event.target.value);
+						handleOnChange(event);
+						formikHandleOnChange(event);
+					}}
 				>	
 
 					<FormControlLabel
@@ -54,9 +61,12 @@ export const YourPlan = ({
 								type="search"
 								label="Find your team"
 								placeholder="Find your team"
-								name="join-existing-team"
+								name="joinExistingTeam"
 								value={joinExistingTeam}
-								onChange={handleOnChange}
+								onChange={event => {
+									formikHandleOnChange(event);
+									handleOnChange(event);
+								}}
 								onBlur={handleBlur}
 								variant="outlined"
 								InputProps={{
@@ -78,7 +88,7 @@ export const YourPlan = ({
 						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
-						{!joinExistingTeam.trim() && (
+						{!joinExistingTeam.trim() && touched.joinExistingTeam && (
 							<div className="error-message">{errors.joinExistingTeam}</div>
 						)}
 
@@ -95,11 +105,14 @@ export const YourPlan = ({
 								type="text"
 								label="Set up a new team"
 								placeholder="Set up a new team"
-								name="set-up-new-team"
+								name="setUpNewTeam"
 								value={setUpNewTeam}
-								onChange={handleOnChange}
+								onChange={event => {
+									formikHandleOnChange(event);
+									handleOnChange(event);
+								}}
 								onBlur={handleBlur}
-								variant="outlined"
+								variant	="outlined"
 								InputProps={{
 									endAdornment: (
 										<InputAdornment>
@@ -121,11 +134,9 @@ export const YourPlan = ({
 						{/* TODO: props.touched for radio buttons with Formik using state.plan[planName]
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
-						{selectedPlan === 'setUpNewTeam' && !setUpNewTeam.trim() && (
-							<div className="error-message">df{errors.setUpNewTeam}</div>
+						{!setUpNewTeam.trim() && touched.joinExistingTeam && (
+							<div className="error-message">{errors.setUpNewTeam}</div>
 						)}
-
-
 					</FormControl>
 				</RadioGroup>
 			</FormControl>
