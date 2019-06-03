@@ -18,7 +18,9 @@ class Step2 extends Component {
             gender: "",
             selectedPlan: "onMyOwn",
             joinExistingTeam: "",
-            setUpNewTeam: ""
+            joinExistingTeamInput: "",
+            setUpNewTeam: "",
+            setUpNewTeamInput: ""
         };
 
         this.dobPattern = new RegExp(
@@ -57,7 +59,9 @@ class Step2 extends Component {
             gender,
             selectedPlan,
             joinExistingTeam,
-            setUpNewTeam
+            joinExistingTeamInput,
+            setUpNewTeam,
+            setUpNewTeamInput
         } = this.state;
 
         return (
@@ -77,7 +81,9 @@ class Step2 extends Component {
                             gender,
                             selectedPlan,
                             joinExistingTeam,
-                            setUpNewTeam
+                            joinExistingTeamInput,
+                            setUpNewTeam,
+                            setUpNewTeamInput,
                         }}
                         validate={values => {
                             let errors = {};
@@ -127,15 +133,15 @@ class Step2 extends Component {
                             }
 
                             if (values.selectedPlan === "joinExistingTeam") {
-                                if (!values.joinExistingTeam.trim()) {
-                                    errors.joinExistingTeam =
+                                if (!values.joinExistingTeamInput.trim()) {
+                                    errors.joinExistingTeamInput =
                                         "This field is required for your chosen selection.";
                                 }
                             }
 
                             if (values.selectedPlan === "setUpNewTeam") {
-                                if (!values.setUpNewTeam.trim()) {
-                                    errors.setUpNewTeam =
+                                if (!values.setUpNewTeamInput.trim()) {
+                                    errors.setUpNewTeamInput =
                                         "This field is required for your chosen selection.";
                                 }
                             }
@@ -183,7 +189,9 @@ class Step2 extends Component {
                                     <YourPlan
                                         selectedPlan={this.state.selectedPlan}
                                         joinExistingTeam={values.joinExistingTeam}
+                                        joinExistingTeamInput={values.joinExistingTeamInput}
                                         setUpNewTeam={values.setUpNewTeam}
+                                        setUpNewTeamInput={values.setUpNewTeamInput}
                                         errors={errors}
                                         touched={touched}
                                         formikHandleOnChange={handleChange}

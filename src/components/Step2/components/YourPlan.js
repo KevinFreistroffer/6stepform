@@ -16,7 +16,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 export const YourPlan = ({ 
 	selectedPlan, 
 	joinExistingTeam, 
+	joinExistingTeamInput, 
 	setUpNewTeam,
+	setUpNewTeamInput,
 	errors,
 	touched,
 	formikHandleOnChange,
@@ -61,8 +63,8 @@ export const YourPlan = ({
 								type="search"
 								label="Find your team"
 								placeholder="Find your team"
-								name="joinExistingTeam"
-								value={joinExistingTeam}
+								name="joinExistingTeamInput"
+								value={joinExistingTeamInput}
 								onChange={event => {
 									formikHandleOnChange(event);
 									handleOnChange(event);
@@ -88,8 +90,8 @@ export const YourPlan = ({
 						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
-						{!joinExistingTeam.trim() && touched.joinExistingTeam && (
-							<div className="error-message">{errors.joinExistingTeam}</div>
+						{!joinExistingTeamInput.trim() && touched.joinExistingTeamInput && (
+							<div className="error-message">{errors.joinExistingTeamInput}</div>
 						)}
 
 					</FormControl>
@@ -105,8 +107,8 @@ export const YourPlan = ({
 								type="text"
 								label="Set up a new team"
 								placeholder="Set up a new team"
-								name="setUpNewTeam"
-								value={setUpNewTeam}
+								name="setUpNewTeamInput"
+								value={setUpNewTeamInput}
 								onChange={event => {
 									formikHandleOnChange(event);
 									handleOnChange(event);
@@ -134,8 +136,8 @@ export const YourPlan = ({
 						{/* TODO: props.touched for radio buttons with Formik using state.plan[planName]
 							https://github.com/jaredpalmer/formik/issues/1051
 						*/}
-						{!setUpNewTeam.trim() && touched.joinExistingTeam && (
-							<div className="error-message">{errors.setUpNewTeam}</div>
+						{!setUpNewTeamInput.trim() && touched.setUpNewTeamInput && (
+							<div className="error-message">{errors.setUpNewTeamInput}</div>
 						)}
 					</FormControl>
 				</RadioGroup>
