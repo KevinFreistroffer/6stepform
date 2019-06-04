@@ -18,8 +18,11 @@ import PaymentCodeForm from "./PaymentCodeForm";
 
 const CompanyTeam = ({
 	companyTeamInput,
-	setTeamPaymentCode,
+	createTeamPaymentCode,
+	registrationFeesChecked,
+	purchasesFeesChecked,
 	registrationFees,
+	purchasesFees,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
@@ -75,22 +78,25 @@ const CompanyTeam = ({
 						<FormControlLabel
 							control={
 								<Checkbox
-									checked={setTeamPaymentCode}
-									name="setTeamPaymentCode"
+									checked={createTeamPaymentCode}
+									name="create-team-payment-code"
 									onChange={event => {
 										handleOnChange(event);
 										formikHandleOnChange(event);
 									}}
-									value={setTeamPaymentCode}
+									value={createTeamPaymentCode}
 								/>
 							}
 							label="Yes, I'd like to create a team payment code"
 						/>
 					</FormControl>
 
-					{setTeamPaymentCode && 
+					{createTeamPaymentCode && 
 				     <PaymentCodeForm 
+						registrationFeesChecked={registrationFeesChecked} 
+						purchasesChecked={purchasesFeesChecked} 
 						registrationFees={registrationFees} 
+						purchasesFees={purchasesFees} 
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
 						handleBlur={handleBlur}

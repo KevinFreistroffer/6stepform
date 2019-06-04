@@ -27,8 +27,19 @@ class Step2 extends Component {
             companyTeamInput: "",
             typeOfMyNewTeam: "friendsFamily",
             familyTeamMembers: [],
-            setTeamPaymentCode: false,
-            registrationFees: false
+            createTeamPaymentCode: false,
+            registrationFeesChecked: false,
+            purchasesFeesChecked: false,
+            registrationFees: {
+                limitTo:'',
+                overallAmount: 0,
+                numOfRegistrations: 0
+            },
+            purchasesFees: {
+                limitTo: '',
+                overallAmount: 0,
+                perPerson: 0
+            }
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
@@ -47,16 +58,55 @@ class Step2 extends Component {
 
         event.persist();
 
+        // names are different case because the ease to change state given the complication
+        // of  of the form.
+        // should be all similiar at some point.
         switch(name) {
-            case 'setTeamPaymentCode':
+            case 'create-team-payment-code':
                 this.setState({
-                    setTeamPaymentCode: !this.state.setTeamPaymentCode
+                    createTeamPaymentCode: !this.state.createTeamPaymentCode
                 });
                 break;
-            case 'registrationFees':
+            case 'registration-fees-checkbox':
                 this.setState({
-                    registrationFees: !this.state.registrationFees
+                    registrationFeesChecked: !this.state.registrationFeesChecked
                 });
+                break;
+            case 'purchases-fees-checkbox':
+                this.setState({
+                    purchasesFeesChecked: !this.state.purchasesFeesChecked
+                });
+                break;
+            case 'registration-fees-select':
+                // this.state.registrationFees.limitTo = value;
+                this.setState({
+                    registrationFees: { ...this.state.registrationFees, limitTo: value }
+                }, () => console.log(this.state.registrationFees));
+                break;
+            case 'purchases-select':
+                this.setState({
+                    purchasesFees: { ...this.state.purchasesFees, limitTo: value }
+                }, () => console.log(this.state.purchasesFees));
+                break;
+            case 'registration-overall-amount':
+                this.setState({
+                    registrationFees: { ...this.state.registrationFees, overallAmount: value }
+                }, () => console.log(this.state.registrationFees));
+                break;
+            case 'num-of-registrations':
+                this.setState({
+                    registrationFees: { ...this.state.registrationFees, numOfRegistrations: value }
+                }, () => console.log(this.state.registrationFees));
+                break;
+            case 'purchases-overall-amount':
+                this.setState({
+                    purchasesFees: { ...this.state.purchasesFees, overallAmount: value }
+                }, () => console.log(this.state.purchasesFees));
+                break;
+            case 'purchases-per-person':
+                this.setState({
+                    registrationFees: { ...this.state.registrationFees, perPerson: value }
+                }, () => console.log(this.state.purchasesFees));
                 break;
             default:
                 this.setState({ [name]: value });
@@ -106,8 +156,11 @@ class Step2 extends Component {
             companyTeamInput,
             typeOfMyNewTeam,
             familyTeamMembers,
-            setTeamPaymentCode,
-            registrationFees
+            createTeamPaymentCode,
+            registrationFeesChecked,
+            purchasesFeesChecked,
+            registrationFees,
+            purchasesFees
         } = this.state;
 
         return (
@@ -262,8 +315,11 @@ class Step2 extends Component {
                                         familyTeamMembers={familyTeamMembers}
                                         errors={errors}
                                         touched={touched}
-                                        setTeamPaymentCode={setTeamPaymentCode}
+                                        createTeamPaymentCode={createTeamPaymentCode}
+                                        registrationFeesChecked={registrationFeesChecked}
+                                        purchasesFeesChecked={purchasesFeesChecked}
                                         registrationFees={registrationFees}
+                                        purchasesFees={purchasesFees}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}

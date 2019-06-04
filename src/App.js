@@ -11,7 +11,6 @@ export class App extends Component{
     super(props);
 
     this.state = {
-      headerDate: 'November 23, 2019456',
       currentStep: 2, 
       step1: {
         firstName: '',
@@ -47,9 +46,6 @@ export class App extends Component{
 
     return (
       <div className="App">   
-        <HeaderComponent 
-          date={this.state.headerDate}>
-        </HeaderComponent>
         {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
         {currentStep === 2 && <Step2 nextStep={this.nextStep}></Step2>} 
       </div>

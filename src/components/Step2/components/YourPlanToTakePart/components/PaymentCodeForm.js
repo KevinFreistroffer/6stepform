@@ -16,7 +16,10 @@ import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 
 const PaymentCodeForm = ({
+	registrationFeesChecked,
+	purchasesChecked,
 	registrationFees,
+	purchasesFees,
 	formikHandleOnChange,
 	handleOnChange,
 	handleBlur,
@@ -26,23 +29,107 @@ const PaymentCodeForm = ({
     return (
         <div className="payment-code-form">
         	<p>What would you like the team payment code to include?</p>
-    			<FormControl fullWidth={true}>
+			<FormControl fullWidth={true}>
+				<FormControlLabel
+					control={
+						<Checkbox
+							checked={registrationFeesChecked}
+							name="registration-fees-checkbox"
+							onChange={event => {
+								handleOnChange(event);
+								formikHandleOnChange(event);
+							}}
+							value={registrationFeesChecked}
+						/>
+					}
+					label="Registration fees"
+				/>
+			</FormControl>
+			<p>Limit to:</p>
+			<FormControl component="fieldset" fullWidth={true}>
+				<RadioGroup
+					aria-label="Overall amount"
+					name="registration-fees-select"
+					value={registrationFees.limitTo}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event); 
+					}}
+				>
 					<FormControlLabel
-						control={
-							<Checkbox
-								checked={registrationFees}
-								name="registrationFees"
-								onChange={event => {
-									handleOnChange(event);
-									formikHandleOnChange(event);
-								}}
-								value={registrationFees}
-							/>
-						}
-						label="Registration fees"
+						value="overallAmount"
+						control={<Radio />}
+						label="Overall amount"
 					/>
-				</FormControl>
-				<p>Limit to:</p>
+					
+					<FormControl>
+						<input type="text" name="registration-overall-amount" placeholder="Overall amount" onChange={handleOnChange}/>
+						<div>Required</div>
+					</FormControl>
+					
+					<FormControlLabel
+						value="	"
+						control={<Radio />}
+						label="No. of registrations"
+					/>
+
+					<FormControl>
+						<input type="text" name="num-of-registrations" placeholder="Overall amount" onChange={handleOnChange}/>
+						<div>Required</div>
+					</FormControl>
+				</RadioGroup>
+			</FormControl>
+
+			<FormControl fullWidth={true}>
+				<FormControlLabel
+					control={
+						<Checkbox
+							checked={purchasesChecked}
+							name="purchases-fees-checkbox"
+							onChange={event => {
+								handleOnChange(event);
+								formikHandleOnChange(event);
+							}}
+							value={purchasesChecked}
+						/>
+					}
+					label="Purchases"
+				/>
+			</FormControl>
+			<p>Limit to:</p>
+			<FormControl component="fieldset" fullWidth={true}>
+				<RadioGroup
+					aria-label="Overall amount"
+					name="purchases-select"
+					value={purchasesFees.limitTo}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event); 
+					}}
+				>
+					<FormControlLabel
+						value="overallAmount"
+						control={<Radio />}
+						label="Overall amount"
+					/>
+
+					<FormControl>
+						<input type="text" placeholder="Overall amount" />
+						<div>Required</div>
+					</FormControl>
+
+					<FormControlLabel
+						value="perPerson"
+						control={<Radio />}
+						label="No. of registrations"
+					/>
+
+					<FormControl>
+						<input type="text" placeholder="Overall amount" />
+						<div>Required</div>
+					</FormControl>
+				</RadioGroup>
+			</FormControl>
         </div>	
     );
 };
