@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
+import PaymentCodeForm from "./PaymentCodeForm";
 
 const CompanyTeam = ({
 	companyTeamInput,
@@ -25,17 +26,20 @@ const CompanyTeam = ({
 	touched,
 	errors
 }) => {
+
 	return (
 		<>
 			<FormControl fullWidth={true}>
 				<FormControlLabel
 					value="companyTeam"
 					control={<Radio />}
-					label="a company team"
+					label="A company team"
 				/>
+			</FormControl>
 
-				{selectedPlan === "companyTeam" && (
-					<>
+			{selectedPlan === "companyTeam" && (
+				<>
+					<FormControl fullWidth={true}>
 						<TextField
 							type="search"
 							label="Company name"
@@ -50,37 +54,42 @@ const CompanyTeam = ({
 							variant="outlined"
 						/>
 
-						{/* TODO: Touched for radio buttons with Formik using state.plan[planName]
-						https://github.com/jaredpalmer/formik/issues/1051
-					*/}
-						{!companyTeamInput.trim() &&
-							touched.companyTeamInput && (
-								<div className="error-message">
-									{errors.companyTeamInput}
-								</div>
-							)}
+						{!companyTeamInput.trim() && touched.companyTeamInput && (
+							<div className="error-message">
+								{errors.companyTeamInput}
+							</div>
+						)}
+					</FormControl>
 
-						<p className="team-payment-code">
-							<span>Team Payment Code</span> - would you like to
-							set up a team payment code that colleagues who want
-							to join your team can use to collate their
-							registration fees? Your company will then be
-							invoiced for all registration fees instead.
-						</p>
+
+					<p className="team-payment-code">
+						<span>Team Payment Code</span> - would you like to set
+						up a team payment code that colleagues who want to join
+						your team; can use to collate their registration fees?
+						Your company will then be invoiced for all registration
+						fees instead.
+					</p>
+
+					<FormControl fullWidth={true}>
 						<FormControlLabel
 							control={
 								<Checkbox
 									checked={setTeamPaymentCode}
 									name="setTeamPaymentCode"
-									onChange={formikHandleOnChange}
-									value="setTeamPaymentCode"
+									onChange={event => {
+										handleOnChange(event);
+										formikHandleOnChange(event);
+									}}
+									value={setTeamPaymentCode}
 								/>
 							}
 							label="Yes, I'd like to create a team payment code"
 						/>
-					</>
-				)}
-			</FormControl>
+					</FormControl>
+
+					{setTeamPaymentCode && <PaymentCodeForm />}
+				</>
+			)}
 		</>
 	);
 };

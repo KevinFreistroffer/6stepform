@@ -25,6 +25,7 @@ export const YourPlanToTakePart = ({
 	setUpNewTeam,
 	setUpNewTeamInput,
 	companyTeamInput,
+	setTeamPaymentCode,
 	familyTeamMembers,
 	addFamilyTeamMember,
 	removeFamilyTeamMember,
@@ -82,6 +83,7 @@ export const YourPlanToTakePart = ({
 
 					<CompanyTeam 
 						companyTeamInput={companyTeamInput}
+						setTeamPaymentCode={setTeamPaymentCode}
 						selectedPlan={selectedPlan}
 						touched={touched}
 						errors={errors}

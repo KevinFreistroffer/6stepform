@@ -53,7 +53,7 @@ class Step2 extends Component {
         // newTeamMemberDateOfBirth || newTeamMemberGender || 
         // newTeamMemberMedicalConditions || newTeamMemberSeparateFundraisingPage)
         // prevState.newFamilyTeamMembers[familyTeamMemberIndex][firstName]: value
-        this.setState({ [name]: value });
+        this.setState({ [name]: name === 'setTeamPaymentCode' ? !this.state.setTeamPaymentCode : value });
     };
 
     handleSubmit = event => {
