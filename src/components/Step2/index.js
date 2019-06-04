@@ -24,8 +24,9 @@ class Step2 extends Component {
             joinExistingTeamInput: "",
             setUpNewTeam: "",
             setUpNewTeamInput: "",
-            myNewTeam: "friendsFamily",
-            newFamilyTeamMembers: []
+            companyTeamInput: "",
+            typeOfMyNewTeam: "friendsFamily",
+            familyTeamMembers: []
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
@@ -37,8 +38,10 @@ class Step2 extends Component {
     };
 
     handleOnChange = (event, familyTeamMemberIndex = undefined) => {
-        const name = event.target.name;
+        let name = event.target.name;
         const value = event.target.value;
+
+        name = name === 'myNewTeam' ? 'typeOfMyNewTeam' : name;
         
         event.persist();
 
@@ -57,27 +60,24 @@ class Step2 extends Component {
     };
 
     addFamilyTeamMember = () => {
+        console.log(`addFamilyTeamMember`);
  
-        this.setState(prevState => {
-            let newState = prevState;
-            newState.newFamilyTeamMembers.push({
+        this.setState({
+            familyTeamMembers: [ ...this.state.familyTeamMembers, {
                 firstName: '',
                 lastName: '',
                 dateOfBirth: '',
                 gender: '',
                 medicalConditions: '',
                 separateFundraisingPage: false
-            })
-
-            return {
-                ...prevState,
-                ...newState
-            }
-        }, () => console.log(`addFamilyTeamMember()`, this.state));
+            }]
+        });
     }
 
-    removeNewFamilyTeamMember = (index) => {
-
+    removeFamilyTeamMember = (removeIndex) => {
+        this.setState({
+            familyTeamMembers: this.state.familyTeamMembers.filter(( member, index ) => index !== removeIndex)
+        });
     }
 
     render() {
@@ -90,9 +90,9 @@ class Step2 extends Component {
             joinExistingTeamInput,
             setUpNewTeam,
             setUpNewTeamInput,
-            myNewTeam,
-            newFamilyTeamMembers,
-            addFamilyTeamMember
+            companyTeamInput,
+            typeOfMyNewTeam,
+            familyTeamMembers
         } = this.state;
 
         return (
@@ -115,7 +115,8 @@ class Step2 extends Component {
                             joinExistingTeamInput,
                             setUpNewTeam,
                             setUpNewTeamInput,
-                            myNewTeam
+                            companyTeamInput,
+                            typeOfMyNewTeam
                         }}
                         validate={values => {
                             let errors = {};
@@ -178,6 +179,12 @@ class Step2 extends Component {
                                 }
                             }
 
+                            if (values.selectedPlan === "companyTeam") {
+                                if (!values.companyTeamInput.trim()) {
+                                    errors.companyTeamInput =
+                                        "This field is required for your chosen selection.";
+                                }
+                            }
         
                             return errors;
                         }}
@@ -221,7 +228,7 @@ class Step2 extends Component {
                                     />
                                     <YourPlanToTakePart
                                         selectedPlan={this.state.selectedPlan}
-                                        myNewTeam={this.state.myNewTeam}
+                                        typeOfMyNewTeam={this.state.typeOfMyNewTeam}
                                         joinExistingTeam={
                                             values.joinExistingTeam
                                         }
@@ -232,13 +239,17 @@ class Step2 extends Component {
                                         setUpNewTeamInput={
                                             values.setUpNewTeamInput
                                         }
-                                        newFamilyTeamMembers={newFamilyTeamMembers}
+                                        companyTeamInput={
+                                            values.companyTeamInput
+                                        }
+                                        familyTeamMembers={familyTeamMembers}
                                         errors={errors}
                                         touched={touched}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}
-                                        addFamilyTeamMember={addFamilyTeamMember}
+                                        addFamilyTeamMember={this.addFamilyTeamMember}
+                                        removeFamilyTeamMember={this.removeFamilyTeamMember}
                                     />
                                     <NextButton />
                                 </form>

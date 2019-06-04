@@ -15,21 +15,41 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import MyNewTeamRadioGroup from "./MyNewTeamRadioGroup.js";
-import MyNewTeamForm from "./MyNewTeamForm.js";
+import FamilyTeamForm from "./FamilyTeamForm.js";
 
 const SetUpNewTeam = ({
 	setUpNewTeam,
 	setUpNewTeamInput,
-	myNewTeam,
-	newFamilyTeamMembers,
+	typeOfMyNewTeam,
+	familyTeamMembers,
 	addFamilyTeamMember,
+	removeFamilyTeamMember,
 	touched,
 	errors,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
-	handleBlur,
+	handleBlur
 }) => {
+	let FamilyTeamMembers;
+
+	if (familyTeamMembers.length > 0) {
+		FamilyTeamMembers = familyTeamMembers.map((member, index) => {
+			return (
+				<FamilyTeamForm
+					key={index}
+					firstName={member.firstName}
+					lastName={member.lastName}
+					dateOfBirth={member.dateOfBirth}
+					gender={member.gender}
+					medicalConditions={member.medicalConditions}
+					formikHandleOnChange={formikHandleOnChange}
+					handleOnChange={handleOnChange}
+				/>
+			);
+		});
+	}
+
 	return (
 		<>
 			<FormControl fullWidth={true}>
@@ -88,25 +108,28 @@ const SetUpNewTeam = ({
 				/>
 			)}
 
-			{myNewTeam === "family" && (
+			{typeOfMyNewTeam === "family" && (
 				<>
 					<h3>
 						You can add additional members to your family team here.
 					</h3>
-					{newFamilyTeamMembers.length && <Button
-						variant="contained"
-						type="button"
-						onClick={() => addFamilyTeamMember()}
-					>
-						+ ADD FAMILY TEAM MEMBER
-					</Button>}
+					{familyTeamMembers.length === 0 && (
+						<Button
+							variant="contained"
+							type="button"
+							onClick={addFamilyTeamMember}
+						>
+							+ ADD FAMILY TEAM MEMBER
+						</Button>
+					)}
 				</>
 			)}
 
-			{ newFamilyTeamMembers.map((member, index) => {
+			{familyTeamMembers.map((member, index) => {
 				return (
-					<MyNewTeamForm
+					<FamilyTeamForm
 						key={index}
+						index={index}
 						firstName={member.firstName}
 						lastName={member.lastName}
 						dateOfBirth={member.dateOfBirth}
@@ -114,9 +137,20 @@ const SetUpNewTeam = ({
 						medicalConditions={member.medicalConditions}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
+						removeFamilyTeamMember={removeFamilyTeamMember}
 					/>
 				);
 			})}
+
+			{familyTeamMembers.length > 0 && (
+				<Button
+					variant="contained"
+					type="button"
+					onClick={addFamilyTeamMember}
+				>
+					+ ADD ANOTHER
+				</Button>
+			)}
 		</>
 	);
 };

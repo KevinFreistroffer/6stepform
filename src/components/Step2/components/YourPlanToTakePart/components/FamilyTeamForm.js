@@ -15,7 +15,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 
-const MyNewTeamForm = ({ 
+const FamilyTeamForm = ({ 
 	firstName,
 	lastName,
 	dateOfBirth,
@@ -25,7 +25,9 @@ const MyNewTeamForm = ({
 	handleOnChange,
 	handleBlur,
 	errors,
-	touched
+	touched,
+	removeFamilyTeamMember,
+	index
 }) => {
     return (
 		<>
@@ -47,6 +49,7 @@ const MyNewTeamForm = ({
 					margin="normal"
 					variant="outlined"
 				/>
+
 			</FormControl>
 
 			<FormControl
@@ -164,10 +167,10 @@ const MyNewTeamForm = ({
 			/> 
 
 			<div className="remove-family-team-member" onClick={() => {
-				// removeFamilyTeamMember(index)
+				removeFamilyTeamMember(index)
 			}}>Remove</div>  
 		</> 
     );
 };
 
-export default MyNewTeamForm;
+export default FamilyTeamForm;

@@ -16,6 +16,7 @@ import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 import JoinExistingTeam from './components/JoinExistingTeam.js';
 import SetUpNewTeam from './components/SetUpNewTeam.js';
+import CompanyTeam from './components/CompanyTeam.js';
 
 export const YourPlanToTakePart = ({
 	selectedPlan,
@@ -23,9 +24,11 @@ export const YourPlanToTakePart = ({
 	joinExistingTeamInput,
 	setUpNewTeam,
 	setUpNewTeamInput,
-	newFamilyTeamMembers,
-	addNewFamilyTeamMember,
-	myNewTeam,
+	companyTeamInput,
+	familyTeamMembers,
+	addFamilyTeamMember,
+	removeFamilyTeamMember,
+	typeOfMyNewTeam,
 	errors,
 	touched,
 	formikHandleOnChange,
@@ -67,13 +70,23 @@ export const YourPlanToTakePart = ({
 					<SetUpNewTeam
 						setUpNewTeamInput={setUpNewTeamInput}
 						selectedPlan={selectedPlan}
-						myNewTeam={myNewTeam}
-						newFamilyTeamMembers={newFamilyTeamMembers}
+						typeOfMyNewTeam={typeOfMyNewTeam}
+						familyTeamMembers={familyTeamMembers}
 						touched={touched}
 						errors={errors}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
-						addNewFamilyTeamMember={addNewFamilyTeamMember}
+						addFamilyTeamMember={addFamilyTeamMember}
+						removeFamilyTeamMember={removeFamilyTeamMember}
+					/>
+
+					<CompanyTeam 
+						companyTeamInput={companyTeamInput}
+						selectedPlan={selectedPlan}
+						touched={touched}
+						errors={errors}
+						formikHandleOnChange={formikHandleOnChange}
+						handleOnChange={handleOnChange}
 					/>
 				</RadioGroup>
 			</FormControl>
