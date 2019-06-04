@@ -21,19 +21,14 @@ const SetUpNewTeam = ({
 	setUpNewTeam,
 	setUpNewTeamInput,
 	myNewTeam,
-	firstName,
-	lastName,
-	dateOfBirth,
-	gender,
-	medicalConditions,
+	newFamilyTeamMembers,
+	addFamilyTeamMember,
 	touched,
 	errors,
-	toggleTeamForm,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
 	handleBlur,
-	teamFormIsVisible,
 }) => {
 	return (
 		<>
@@ -87,7 +82,6 @@ const SetUpNewTeam = ({
 					setUpNewTeam={setUpNewTeam}
 					touched={touched}
 					errors={errors}
-					toggleTeamForm={toggleTeamForm}
 					formikHandleOnChange={formikHandleOnChange}
 					handleOnChange={handleOnChange}
 					handleBlur={handleBlur}
@@ -99,27 +93,30 @@ const SetUpNewTeam = ({
 					<h3>
 						You can add additional members to your family team here.
 					</h3>
-					<Button
+					{newFamilyTeamMembers.length && <Button
 						variant="contained"
 						type="button"
-						onClick={() => toggleTeamForm(true)}
+						onClick={() => addFamilyTeamMember()}
 					>
 						+ ADD FAMILY TEAM MEMBER
-					</Button>
+					</Button>}
 				</>
 			)}
 
-			{teamFormIsVisible && (
-				<MyNewTeamForm
-					firstName={firstName}
-					lastName={lastName}
-					dateOfBirth={dateOfBirth}
-					gender={gender}
-					medicalConditions={medicalConditions}
-					formikHandleOnChange={formikHandleOnChange}
-					handleOnChange={handleOnChange}
-				/>
-			)}
+			{ newFamilyTeamMembers.map((member, index) => {
+				return (
+					<MyNewTeamForm
+						key={index}
+						firstName={member.firstName}
+						lastName={member.lastName}
+						dateOfBirth={member.dateOfBirth}
+						gender={member.gender}
+						medicalConditions={member.medicalConditions}
+						formikHandleOnChange={formikHandleOnChange}
+						handleOnChange={handleOnChange}
+					/>
+				);
+			})}
 		</>
 	);
 };

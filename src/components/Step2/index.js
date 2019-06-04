@@ -24,20 +24,11 @@ class Step2 extends Component {
             joinExistingTeamInput: "",
             setUpNewTeam: "",
             setUpNewTeamInput: "",
-            newTeamMemberDateOfBirth: "",
-            newTeamMemberMedicalConditions: "",
             myNewTeam: "friendsFamily",
-            newTeamFormIsVisible: false,
-            newFamilyTeamMembers: []            ]
+            newFamilyTeamMembers: []
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.myNewTeam === 'family' && this.state.myNewTeam === 'friendsFamily') {
-            this.setState({ newTeamFormIsVisible: false });
-        }
     }
 
     handleNextStep = () => {
@@ -45,12 +36,19 @@ class Step2 extends Component {
         // this.props.nextStep();
     };
 
-    handleOnChange = event => {
+    handleOnChange = (event, familyTeamMemberIndex = undefined) => {
         const name = event.target.name;
         const value = event.target.value;
         
         event.persist();
 
+        // So easily, 
+        // familyMembers[index].firstName = value;
+
+        // if name == (newTeamMemberFirstName || newTeamMemberLastName ||
+        // newTeamMemberDateOfBirth || newTeamMemberGender || 
+        // newTeamMemberMedicalConditions || newTeamMemberSeparateFundraisingPage)
+        // prevState.newFamilyTeamMembers[familyTeamMemberIndex][firstName]: value
         this.setState({ [name]: value });
     };
 
@@ -58,19 +56,34 @@ class Step2 extends Component {
         //const errors = this.validate(this.state);
     };
 
-    toggleNewTeamFormIsVisible = (newTeamFormIsVisible) => {
-        this.setState({ newTeamFormIsVisible });
+    addFamilyTeamMember = () => {
+ 
+        this.setState(prevState => {
+            let newState = prevState;
+            newState.newFamilyTeamMembers.push({
+                firstName: '',
+                lastName: '',
+                dateOfBirth: '',
+                gender: '',
+                medicalConditions: '',
+                separateFundraisingPage: false
+            })
+
+            return {
+                ...prevState,
+                ...newState
+            }
+        }, () => console.log(`addFamilyTeamMember()`, this.state));
+    }
+
+    removeNewFamilyTeamMember = (index) => {
+
     }
 
     render() {
         const {
             challenge,
             dateOfBirth,
-            newTeamMemberFirstName,
-            newTeamMemberLastName,
-            newTeamMemberDateOfBirth,
-            newTeamMemberMedicalConditions,
-            newTeamMemberGender,
             gender,
             selectedPlan,
             joinExistingTeam,
@@ -78,8 +91,8 @@ class Step2 extends Component {
             setUpNewTeam,
             setUpNewTeamInput,
             myNewTeam,
-            newTeamFormIsVisible,
-            toggleNewTeamFormIsVisible
+            newFamilyTeamMembers,
+            addFamilyTeamMember
         } = this.state;
 
         return (
@@ -96,11 +109,6 @@ class Step2 extends Component {
                         initialValues={{
                             challenge,
                             dateOfBirth,
-                            newTeamMemberDateOfBirth,
-                            newTeamMemberFirstName,
-                            newTeamMemberLastName,
-                            newTeamMemberMedicalConditions,
-                            newTeamMemberGender,
                             gender,
                             selectedPlan,
                             joinExistingTeam,
@@ -170,19 +178,7 @@ class Step2 extends Component {
                                 }
                             }
 
-                            if (!values.newTeamMemberDateOfBirth) {
-                                errors.newTeamMemberDateOfBirth =
-                                    "Date of birth is required.";
-                                // TODO: add logic checking if the date numbers are valid ie the day is not 35 or something
-                            } else if (
-                                !this.dobPattern.test(
-                                    values.newTeamMemberDateOfBirth
-                                )
-                            ) {
-                                errors.newTeamMemberDateOfBirth =
-                                    "Please enter a valid date of birth.";
-                            }
-
+        
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
@@ -236,24 +232,13 @@ class Step2 extends Component {
                                         setUpNewTeamInput={
                                             values.setUpNewTeamInput
                                         }
-                                        firstName={
-                                            values.newTeamMemberFirstName
-                                        }
-                                        lastName={values.newTeamMemberLastName}
-                                        dateOfBirth={
-                                            values.newTeamMemberDateOfBirth
-                                        }
-                                        gender={values.newTeamMemberGender}
-                                        medicalConditions={
-                                            values.newTeamMemberMedicalConditions
-                                        }
+                                        newFamilyTeamMembers={newFamilyTeamMembers}
                                         errors={errors}
                                         touched={touched}
-                                        newTeamFormIsVisible={newTeamFormIsVisible}
-                                        toggleNewTeamFormIsVisible={this.toggleNewTeamFormIsVisible}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}
+                                        addFamilyTeamMember={addFamilyTeamMember}
                                     />
                                     <NextButton />
                                 </form>

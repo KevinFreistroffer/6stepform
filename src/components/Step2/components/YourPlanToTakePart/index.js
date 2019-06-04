@@ -23,16 +23,11 @@ export const YourPlanToTakePart = ({
 	joinExistingTeamInput,
 	setUpNewTeam,
 	setUpNewTeamInput,
-	firstName,
-	lastName,
-	dateOfBirth,
-	gender,
-	medicalConditions,
+	newFamilyTeamMembers,
+	addNewFamilyTeamMember,
 	myNewTeam,
 	errors,
 	touched,
-	newTeamFormIsVisible,
-	toggleNewTeamFormIsVisible,
 	formikHandleOnChange,
 	handleOnChange,
 	handleBlur
@@ -73,17 +68,12 @@ export const YourPlanToTakePart = ({
 						setUpNewTeamInput={setUpNewTeamInput}
 						selectedPlan={selectedPlan}
 						myNewTeam={myNewTeam}
-						firstName={firstName}
-						lastName={lastName}
-						dateOfBirth={dateOfBirth}
-						gender={gender}
-						medicalConditions={medicalConditions}
+						newFamilyTeamMembers={newFamilyTeamMembers}
 						touched={touched}
 						errors={errors}
-						teamFormIsVisible={newTeamFormIsVisible}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
-						toggleTeamForm={toggleNewTeamFormIsVisible}
+						addNewFamilyTeamMember={addNewFamilyTeamMember}
 					/>
 				</RadioGroup>
 			</FormControl>
