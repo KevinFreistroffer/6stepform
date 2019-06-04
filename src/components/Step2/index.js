@@ -3,10 +3,11 @@ import * as styles from "./styles.scss";
 import StepHeader from "../StepHeader";
 import YourChallenge from "./components/YourChallenge";
 import YourDetails from "./components/YourDetails";
-import YourPlan from "./components/YourPlan";
+import YourPlanToTakePart from "./components/YourPlanToTakePart";
 import NextButton from "./components/NextButton";
 import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
+import { DOB_REGEX } from "../../constants";
 
 class Step2 extends Component {
     constructor(props) {
@@ -15,17 +16,20 @@ class Step2 extends Component {
         this.state = {
             challenge: "",
             dateOfBirth: "",
+            firstName: "",
+            lastName: "",
             gender: "",
             selectedPlan: "onMyOwn",
             joinExistingTeam: "",
             joinExistingTeamInput: "",
             setUpNewTeam: "",
-            setUpNewTeamInput: ""
+            setUpNewTeamInput: "",
+            newTeamMemberDateOfBirth: "",
+            newTeamMemberMedicalConditions: "",
+            myNewTeam: "friendsFamily"
         };
 
-        this.dobPattern = new RegExp(
-            "^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)+[0-9]{2})*$"
-        );
+        this.dobPattern = new RegExp(DOB_REGEX);
     }
 
     handleNextStep = () => {
@@ -52,16 +56,23 @@ class Step2 extends Component {
         //const errors = this.validate(this.state);
     };
 
+
     render() {
         const {
             challenge,
             dateOfBirth,
+            newTeamMemberFirstName,
+            newTeamMemberLastName,
+            newTeamMemberDateOfBirth,
+            newTeamMemberMedicalConditions,
+            newTeamMemberGender,
             gender,
             selectedPlan,
             joinExistingTeam,
             joinExistingTeamInput,
             setUpNewTeam,
-            setUpNewTeamInput
+            setUpNewTeamInput,
+            myNewTeam
         } = this.state;
 
         return (
@@ -78,12 +89,18 @@ class Step2 extends Component {
                         initialValues={{
                             challenge,
                             dateOfBirth,
+                            newTeamMemberDateOfBirth,
+                            newTeamMemberFirstName,
+                            newTeamMemberLastName,
+                            newTeamMemberMedicalConditions,
+                            newTeamMemberGender,
                             gender,
                             selectedPlan,
                             joinExistingTeam,
                             joinExistingTeamInput,
                             setUpNewTeam,
                             setUpNewTeamInput,
+                            myNewTeam
                         }}
                         validate={values => {
                             let errors = {};
@@ -146,6 +163,19 @@ class Step2 extends Component {
                                 }
                             }
 
+                            if (!values.newTeamMemberDateOfBirth) {
+                                errors.newTeamMemberDateOfBirth =
+                                    "Date of birth is required.";
+                                // TODO: add logic checking if the date numbers are valid ie the day is not 35 or something
+                            } else if (
+                                !this.dobPattern.test(
+                                    values.newTeamMemberDateOfBirth
+                                )
+                            ) {
+                                errors.newTeamMemberDateOfBirth =
+                                    "Please enter a valid date of birth.";
+                            }
+
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
@@ -186,17 +216,34 @@ class Step2 extends Component {
                                         handleOnChange={handleChange}
                                         handleBlur={handleBlur}
                                     />
-                                    <YourPlan
+                                    <YourPlanToTakePart
                                         selectedPlan={this.state.selectedPlan}
-                                        joinExistingTeam={values.joinExistingTeam}
-                                        joinExistingTeamInput={values.joinExistingTeamInput}
+                                        joinExistingTeam={
+                                            values.joinExistingTeam
+                                        }
+                                        joinExistingTeamInput={
+                                            values.joinExistingTeamInput
+                                        }
                                         setUpNewTeam={values.setUpNewTeam}
-                                        setUpNewTeamInput={values.setUpNewTeamInput}
+                                        setUpNewTeamInput={
+                                            values.setUpNewTeamInput
+                                        }
+                                        firstName={
+                                            values.newTeamMemberFirstName
+                                        }
+                                        lastName={values.newTeamMemberLastName}
+                                        dateOfBirth={
+                                            values.newTeamMemberDateOfBirth
+                                        }
+                                        gender={values.newTeamMemberGender}
+                                        medicalConditions={
+                                            values.newTeamMemberMedicalConditions
+                                        }
                                         errors={errors}
                                         touched={touched}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
-                                        handleBlur={handleBlur} 
+                                        handleBlur={handleBlur}
                                     />
                                     <NextButton />
                                 </form>

@@ -12,7 +12,7 @@ export class App extends Component{
 
     this.state = {
       headerDate: 'November 23, 2019456',
-      currentStep: 1,
+      currentStep: 2, 
       step1: {
         firstName: '',
         lastName: '',
@@ -50,11 +50,8 @@ export class App extends Component{
         <HeaderComponent 
           date={this.state.headerDate}>
         </HeaderComponent>
-        <Step2 nextStep={this.nextStep}></Step2>
-      {/*
-              {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
+        {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
         {currentStep === 2 && <Step2 nextStep={this.nextStep}></Step2>} 
-      */}
       </div>
     );
   }
