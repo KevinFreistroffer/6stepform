@@ -31,13 +31,13 @@ export const YourPlanToTakePart = ({
 	myNewTeam,
 	errors,
 	touched,
+	newTeamFormIsVisible,
+	toggleNewTeamFormIsVisible,
 	formikHandleOnChange,
 	handleOnChange,
 	handleBlur
 }) => {
-	useEffect(() => {
-		console.log("selectedPlan", selectedPlan);
-	});
+	
 	return (
 		<div className="your-plan section">
 			<h2 className="section--title">
@@ -50,11 +50,6 @@ export const YourPlanToTakePart = ({
 					name="selectedPlan"
 					value={selectedPlan}
 					onChange={event => {
-						console.log(
-							"onChange",
-							event.target.name,
-							event.target.value
-						);
 						handleOnChange(event);
 						formikHandleOnChange(event);
 					}}
@@ -83,10 +78,12 @@ export const YourPlanToTakePart = ({
 						dateOfBirth={dateOfBirth}
 						gender={gender}
 						medicalConditions={medicalConditions}
-						formikHandleOnChange={formikHandleOnChange}
-						handleOnChange={handleOnChange}
 						touched={touched}
 						errors={errors}
+						teamFormIsVisible={newTeamFormIsVisible}
+						formikHandleOnChange={formikHandleOnChange}
+						handleOnChange={handleOnChange}
+						toggleTeamForm={toggleNewTeamFormIsVisible}
 					/>
 				</RadioGroup>
 			</FormControl>

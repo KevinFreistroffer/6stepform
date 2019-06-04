@@ -26,10 +26,17 @@ class Step2 extends Component {
             setUpNewTeamInput: "",
             newTeamMemberDateOfBirth: "",
             newTeamMemberMedicalConditions: "",
-            myNewTeam: "friendsFamily"
+            myNewTeam: "friendsFamily",
+            newTeamFormIsVisible: false,
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.myNewTeam === 'family' && this.state.myNewTeam === 'friendsFamily') {
+            this.setState({ newTeamFormIsVisible: false });
+        }
     }
 
     handleNextStep = () => {
@@ -40,22 +47,19 @@ class Step2 extends Component {
     handleOnChange = event => {
         const name = event.target.name;
         const value = event.target.value;
-        console.log(name, value);
-
+        
         event.persist();
 
-        this.setState(
-            {
-                [name]: value
-            },
-            () => console.log(this.state)
-        );
+        this.setState({ [name]: value });
     };
 
     handleSubmit = event => {
         //const errors = this.validate(this.state);
     };
 
+    toggleNewTeamFormIsVisible = (newTeamFormIsVisible) => {
+        this.setState({ newTeamFormIsVisible });
+    }
 
     render() {
         const {
@@ -72,7 +76,9 @@ class Step2 extends Component {
             joinExistingTeamInput,
             setUpNewTeam,
             setUpNewTeamInput,
-            myNewTeam
+            myNewTeam,
+            newTeamFormIsVisible,
+            toggleNewTeamFormIsVisible
         } = this.state;
 
         return (
@@ -218,6 +224,7 @@ class Step2 extends Component {
                                     />
                                     <YourPlanToTakePart
                                         selectedPlan={this.state.selectedPlan}
+                                        myNewTeam={this.state.myNewTeam}
                                         joinExistingTeam={
                                             values.joinExistingTeam
                                         }
@@ -241,6 +248,8 @@ class Step2 extends Component {
                                         }
                                         errors={errors}
                                         touched={touched}
+                                        newTeamFormIsVisible={newTeamFormIsVisible}
+                                        toggleNewTeamFormIsVisible={this.toggleNewTeamFormIsVisible}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}

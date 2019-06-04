@@ -17,16 +17,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const MyNewTeamRadioGroup = ({
 	myNewTeam,
-	firstName,
-	lastName,
-	dateOfBirth,
-	medicalConditions,
-	gender,
+	touched,
+	errors,
 	formikHandleOnChange,
 	handleOnChange,
 	handleBlur,
-	touched,
-	errors
 }) => {
 	return (
 		<>
@@ -37,11 +32,6 @@ const MyNewTeamRadioGroup = ({
 					name="myNewTeam"
 					value={myNewTeam}
 					onChange={event => {
-						console.log(
-							"onChange",
-							event.target.name,
-							event.target.value
-						);
 						handleOnChange(event);
 						formikHandleOnChange(event);
 					}}

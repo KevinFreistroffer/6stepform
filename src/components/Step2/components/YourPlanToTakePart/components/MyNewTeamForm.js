@@ -15,7 +15,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 
-const MyNewTeamForm = ({
+const MyNewTeamForm = ({ 
 	firstName,
 	lastName,
 	dateOfBirth,
@@ -29,15 +29,6 @@ const MyNewTeamForm = ({
 }) => {
     return (
 		<>
-			<h3>You can add additional members to your family team here.</h3>
-			<Button variant="contained" type="submit" onClick={() => {
-				// Show the form
-				// Hide the button
-				// state.showFamilyTeamMemberForm
-			}}>
-				+ ADD FAMILY TEAM MEMBER
-			</Button>
-
 			<FormControl
 				fullWidth={true}
 				className="family-team-member-container"
@@ -48,7 +39,10 @@ const MyNewTeamForm = ({
 					placeholder="First name"
 					name="newTeamMemberFirstName"
 					value={firstName}
-					onChange={handleOnChange}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event);
+					}}
 					onBlur={handleBlur}
 					margin="normal"
 					variant="outlined"
@@ -65,7 +59,10 @@ const MyNewTeamForm = ({
 					placeholder="Last name"
 					name="newTeamMemberLastName"
 					value={lastName}
-					onChange={handleOnChange}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event);
+					}}
 					onBlur={handleBlur}
 					margin="normal"
 					variant="outlined"
@@ -79,7 +76,10 @@ const MyNewTeamForm = ({
 					placeholder="Date of birth"
 					name="newTeamMemberDateOfBirth"
 					value={dateOfBirth}
-					onChange={handleOnChange}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event);
+					}}
 					onBlur={handleBlur}
 					margin="normal"
 					variant="outlined"
@@ -91,12 +91,7 @@ const MyNewTeamForm = ({
 						)
 					}}
 				/>
-				{errors.teamMemberDateOfBirth &&
-					touched.teamMemberDateOfBirth && (
-						<div className="error-message">
-							{errors.teamMemberDateOfBirth}
-						</div>
-					)}
+
 			</FormControl>
 
 			<FormControl fullWidth={true}>
@@ -110,7 +105,10 @@ const MyNewTeamForm = ({
 					placeholder="Medical conditions (optional)"
 					name="newTeamMemberMedicalConditions"
 					value={medicalConditions}
-					onChange={handleOnChange}
+					onChange={event => {
+						handleOnChange(event);
+						formikHandleOnChange(event);
+					}}
 					onBlur={handleBlur}
 					margin="normal"
 					variant="outlined"

@@ -13,11 +13,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
-import Checkbox from '@material-ui/core/Checkbox';
-import MyNewTeamRadioGroup from './MyNewTeamRadioGroup.js';
-import MyNewTeamForm from './MyNewTeamForm.js';
+import Checkbox from "@material-ui/core/Checkbox";
+import MyNewTeamRadioGroup from "./MyNewTeamRadioGroup.js";
+import MyNewTeamForm from "./MyNewTeamForm.js";
 
-const SetUpNewTeam = ({ 	
+const SetUpNewTeam = ({
 	setUpNewTeam,
 	setUpNewTeamInput,
 	myNewTeam,
@@ -26,15 +26,18 @@ const SetUpNewTeam = ({
 	dateOfBirth,
 	gender,
 	medicalConditions,
+	touched,
+	errors,
+	toggleTeamForm,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
 	handleBlur,
-	touched,
-	errors }) => {
-    return (
-    	<> 
-    		<FormControl fullWidth={true}>
+	teamFormIsVisible,
+}) => {
+	return (
+		<>
+			<FormControl fullWidth={true}>
 				<FormControlLabel
 					value="setUpNewTeam"
 					control={<Radio />}
@@ -72,37 +75,55 @@ const SetUpNewTeam = ({
 				{/* TODO: touched for radio buttons with Formik using state.plan[planName]
 					https://github.com/jaredpalmer/formik/issues/1051
 				*/}
-				{!setUpNewTeamInput.trim() &&
-					touched.setUpNewTeamInput && (
-						<div className="error-message">
-							{errors.setUpNewTeamInput}
-						</div>
-					)}
+				{!setUpNewTeamInput.trim() && touched.setUpNewTeamInput && (
+					<div className="error-message">
+						{errors.setUpNewTeamInput}
+					</div>
+				)}
 			</FormControl>
 
-			{selectedPlan === 'setUpNewTeam' && 
-			 <MyNewTeamRadioGroup
-				selectedPlan={selectedPlan}
-				setUpNewTeam={setUpNewTeam}
-				formikHandleOnChange={formikHandleOnChange}
-				handleOnChange={handleOnChange}
-				handleBlur={handleBlur}
-				touched={touched}
-				errors={errors}
-			 />}
+			{selectedPlan === "setUpNewTeam" && (
+				<MyNewTeamRadioGroup
+					setUpNewTeam={setUpNewTeam}
+					touched={touched}
+					errors={errors}
+					toggleTeamForm={toggleTeamForm}
+					formikHandleOnChange={formikHandleOnChange}
+					handleOnChange={handleOnChange}
+					handleBlur={handleBlur}
+				/>
+			)}
 
-			{myNewTeam === "family" && 
-			 <MyNewTeamForm 
-			 	firstName={firstName}
-			 	lastName={lastName}
-			 	dateOfBirth={dateOfBirth}
-			 	gender={gender}
-			 	medicalConditions={medicalConditions}
-			 />}
+			{myNewTeam === "family" && (
+				<>
+					<h3>
+						You can add additional members to your family team here.
+					</h3>
+					<Button
+						variant="contained"
+						type="button"
+						onClick={() => toggleTeamForm(true)}
+					>
+						+ ADD FAMILY TEAM MEMBER
+					</Button>
+				</>
+			)}
+
+			{teamFormIsVisible && (
+				<MyNewTeamForm
+					firstName={firstName}
+					lastName={lastName}
+					dateOfBirth={dateOfBirth}
+					gender={gender}
+					medicalConditions={medicalConditions}
+					formikHandleOnChange={formikHandleOnChange}
+					handleOnChange={handleOnChange}
+				/>
+			)}
 		</>
-    );
+	);
 };
 
-SetUpNewTeam.displayName = 'SetUpNewTeam';
+SetUpNewTeam.displayName = "SetUpNewTeam";
 
 export default SetUpNewTeam;
