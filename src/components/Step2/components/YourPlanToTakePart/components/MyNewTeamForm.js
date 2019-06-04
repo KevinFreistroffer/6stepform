@@ -161,7 +161,11 @@ const MyNewTeamForm = ({
 					/>
 				}
 				label="Create a separate fundraising page for this team member"
-			/>   
+			/> 
+
+			<div className="remove-family-team-member" onClick={() => {
+				// removeFamilyTeamMember(index)
+			}}>Remove</div>  
 		</> 
     );
 };

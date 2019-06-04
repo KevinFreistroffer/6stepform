@@ -28,6 +28,7 @@ class Step2 extends Component {
             newTeamMemberMedicalConditions: "",
             myNewTeam: "friendsFamily",
             newTeamFormIsVisible: false,
+            newFamilyTeamMembers: []            ]
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);

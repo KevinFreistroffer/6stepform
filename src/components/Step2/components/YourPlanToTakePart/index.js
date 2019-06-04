@@ -37,9 +37,9 @@ export const YourPlanToTakePart = ({
 	handleOnChange,
 	handleBlur
 }) => {
-	
+
 	return (
-		<div className="your-plan section">
+		<div className="your-plan-to-take-part section">
 			<h2 className="section--title">
 				How are you planning to take part
 			</h2>
