@@ -27,7 +27,8 @@ class Step2 extends Component {
             companyTeamInput: "",
             typeOfMyNewTeam: "friendsFamily",
             familyTeamMembers: [],
-            setTeamPaymentCode: false
+            setTeamPaymentCode: false,
+            registrationFees: false
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
@@ -42,18 +43,24 @@ class Step2 extends Component {
         let name = event.target.name;
         const value = event.target.value;
 
-        name = name === 'myNewTeam' ? 'typeOfMyNewTeam' : name;
-        
+        name = name === "myNewTeam" ? "typeOfMyNewTeam" : name;
+
         event.persist();
 
-        // So easily, 
-        // familyMembers[index].firstName = value;
-
-        // if name == (newTeamMemberFirstName || newTeamMemberLastName ||
-        // newTeamMemberDateOfBirth || newTeamMemberGender || 
-        // newTeamMemberMedicalConditions || newTeamMemberSeparateFundraisingPage)
-        // prevState.newFamilyTeamMembers[familyTeamMemberIndex][firstName]: value
-        this.setState({ [name]: name === 'setTeamPaymentCode' ? !this.state.setTeamPaymentCode : value });
+        switch(name) {
+            case 'setTeamPaymentCode':
+                this.setState({
+                    setTeamPaymentCode: !this.state.setTeamPaymentCode
+                });
+                break;
+            case 'registrationFees':
+                this.setState({
+                    registrationFees: !this.state.registrationFees
+                });
+                break;
+            default:
+                this.setState({ [name]: value });
+        };
     };
 
     handleSubmit = event => {
@@ -62,24 +69,29 @@ class Step2 extends Component {
 
     addFamilyTeamMember = () => {
         console.log(`addFamilyTeamMember`);
- 
-        this.setState({
-            familyTeamMembers: [ ...this.state.familyTeamMembers, {
-                firstName: '',
-                lastName: '',
-                dateOfBirth: '',
-                gender: '',
-                medicalConditions: '',
-                separateFundraisingPage: false
-            }]
-        });
-    }
 
-    removeFamilyTeamMember = (removeIndex) => {
         this.setState({
-            familyTeamMembers: this.state.familyTeamMembers.filter(( member, index ) => index !== removeIndex)
+            familyTeamMembers: [
+                ...this.state.familyTeamMembers,
+                {
+                    firstName: "",
+                    lastName: "",
+                    dateOfBirth: "",
+                    gender: "",
+                    medicalConditions: "",
+                    separateFundraisingPage: false
+                }
+            ]
         });
-    }
+    };
+
+    removeFamilyTeamMember = removeIndex => {
+        this.setState({
+            familyTeamMembers: this.state.familyTeamMembers.filter(
+                (member, index) => index !== removeIndex
+            )
+        });
+    };
 
     render() {
         const {
@@ -94,7 +106,8 @@ class Step2 extends Component {
             companyTeamInput,
             typeOfMyNewTeam,
             familyTeamMembers,
-            setTeamPaymentCode
+            setTeamPaymentCode,
+            registrationFees
         } = this.state;
 
         return (
@@ -187,7 +200,7 @@ class Step2 extends Component {
                                         "This field is required for your chosen selection.";
                                 }
                             }
-        
+
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
@@ -230,7 +243,9 @@ class Step2 extends Component {
                                     />
                                     <YourPlanToTakePart
                                         selectedPlan={this.state.selectedPlan}
-                                        typeOfMyNewTeam={this.state.typeOfMyNewTeam}
+                                        typeOfMyNewTeam={
+                                            this.state.typeOfMyNewTeam
+                                        }
                                         joinExistingTeam={
                                             values.joinExistingTeam
                                         }
@@ -248,11 +263,16 @@ class Step2 extends Component {
                                         errors={errors}
                                         touched={touched}
                                         setTeamPaymentCode={setTeamPaymentCode}
+                                        registrationFees={registrationFees}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}
-                                        addFamilyTeamMember={this.addFamilyTeamMember}
-                                        removeFamilyTeamMember={this.removeFamilyTeamMember}
+                                        addFamilyTeamMember={
+                                            this.addFamilyTeamMember
+                                        }
+                                        removeFamilyTeamMember={
+                                            this.removeFamilyTeamMember
+                                        }
                                     />
                                     <NextButton />
                                 </form>

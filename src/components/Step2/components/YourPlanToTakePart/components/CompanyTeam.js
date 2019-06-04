@@ -19,6 +19,7 @@ import PaymentCodeForm from "./PaymentCodeForm";
 const CompanyTeam = ({
 	companyTeamInput,
 	setTeamPaymentCode,
+	registrationFees,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
@@ -87,7 +88,16 @@ const CompanyTeam = ({
 						/>
 					</FormControl>
 
-					{setTeamPaymentCode && <PaymentCodeForm />}
+					{setTeamPaymentCode && 
+				     <PaymentCodeForm 
+						registrationFees={registrationFees} 
+						formikHandleOnChange={formikHandleOnChange}
+						handleOnChange={handleOnChange}
+						handleBlur={handleBlur}
+						errors={errors}
+						touched={touched}
+					 />
+					}
 				</>
 			)}
 		</>
