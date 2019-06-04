@@ -92,11 +92,11 @@ const ManualAddressForm = props => {
 			</FormControl>
 
 			<FormControl fullWidth={true}>
-				<InputLabel htmlFor="outlined-age-native-simple">
+				<InputLabel htmlFor="manual-address-state-select">
 					State
 				</InputLabel>
 				<Select 
-					id="state-select" 
+					id="manual-address-state-select" 
 					name="state" 
 					open={selectOpen}
 					onClose={() => setSelectOpen(false)}

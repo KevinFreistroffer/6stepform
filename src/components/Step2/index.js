@@ -39,6 +39,17 @@ class Step2 extends Component {
                 limitTo: '',
                 overallAmount: 0,
                 perPerson: 0
+            },
+            invoiceDetails: {
+                contactPerson: '',
+                email: '',
+                ABN: '',
+                address: '',
+                address1: '',
+                address2: '',
+                city: '',
+                zip: '',
+                state: ''
             }
         };
 

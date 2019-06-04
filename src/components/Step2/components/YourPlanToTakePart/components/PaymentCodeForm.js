@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
+import InvoiceDetailsForm from './InvoiceDetailsForm';
 
 const PaymentCodeForm = ({
 	registrationFeesChecked,
@@ -130,6 +131,11 @@ const PaymentCodeForm = ({
 					</FormControl>
 				</RadioGroup>
 			</FormControl>
+
+			<InvoiceDetailsForm 
+				handleBlur={handleBlur}
+				handleOnChange={handleOnChange}
+			/>
         </div>	
     );
 };
