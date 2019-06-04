@@ -26,7 +26,8 @@ class Step2 extends Component {
             setUpNewTeamInput: "",
             companyTeamInput: "",
             typeOfMyNewTeam: "friendsFamily",
-            familyTeamMembers: []
+            familyTeamMembers: [],
+            setTeamPaymentCode: false
         };
 
         this.dobPattern = new RegExp(DOB_REGEX);
@@ -92,7 +93,8 @@ class Step2 extends Component {
             setUpNewTeamInput,
             companyTeamInput,
             typeOfMyNewTeam,
-            familyTeamMembers
+            familyTeamMembers,
+            setTeamPaymentCode
         } = this.state;
 
         return (
@@ -245,6 +247,7 @@ class Step2 extends Component {
                                         familyTeamMembers={familyTeamMembers}
                                         errors={errors}
                                         touched={touched}
+                                        setTeamPaymentCode={setTeamPaymentCode}
                                         formikHandleOnChange={handleChange}
                                         handleOnChange={this.handleOnChange}
                                         handleBlur={handleBlur}
