@@ -141,7 +141,9 @@ const InvoiceDetailsForm = (props) => {
 					<MenuItem value="tasmania">Tasmania</MenuItem>
 					<MenuItem value="victoria">Victoria</MenuItem>
 				</Select>
-			</FormControl>			
+			</FormControl>	
+
+			<p>Your team payment code will be sent to you by email once you've successfully registered.</p>		
     	</div>	   
     );
 };

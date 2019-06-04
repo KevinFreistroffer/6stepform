@@ -4,9 +4,10 @@ import StepHeader from "../StepHeader";
 import YourChallenge from "./components/YourChallenge";
 import YourDetails from "./components/YourDetails";
 import YourPlanToTakePart from "./components/YourPlanToTakePart";
-import NextButton from "./components/NextButton";
+import CompleteStepControls from "../CompleteStepControls";
 import { Formik, Form, ErrorMessage } from "formik";
 import validator from "validator";
+import Button from '@material-ui/core/Button';
 import { DOB_REGEX } from "../../constants";
 
 class Step2 extends Component {
@@ -171,7 +172,9 @@ class Step2 extends Component {
             registrationFeesChecked,
             purchasesFeesChecked,
             registrationFees,
-            purchasesFees
+            purchasesFees,
+            nestStep,
+            prevStep
         } = this.state;
 
         return (
@@ -341,7 +344,17 @@ class Step2 extends Component {
                                             this.removeFamilyTeamMember
                                         }
                                     />
-                                    <NextButton />
+                                    <CompleteStepControls>
+                                        <>
+                                            <p>I have read <a href="#" target="_blank">Privacy policy</a></p>
+                                        <Button variant="contained" type="button" onClick={() => {
+                                            this.props.previousStep(); 
+                                        }}>Back</Button> 
+                                        <Button variant="contained" type="submit" onClick={() => {
+                                            this.props.nextStep(); 
+                                        }}>Next</Button> 
+                                        </>
+                                    </CompleteStepControls>
                                 </form>
                             );
                         }}

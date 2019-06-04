@@ -5,7 +5,7 @@ import SignUpWithEmail from './components/SignUpWithEmail';
 import YourAddress from './components/YourAddress/index';
 import Password from './components/Password';
 import ErrorMessages from './components/ErrorMessages';
-import NextButton from './components/NextButton';
+import CompleteStepControls from '../CompleteStepControls';
 import { Formik, Form, ErrorMessage } from 'formik';
 import validator from 'validator';
 import Button from '@material-ui/core/Button';
@@ -232,7 +232,14 @@ class Step1 extends Component {
                                     dirty={dirty}
                                     errors={errors} 
                                 />
-                                <NextButton />
+                                <CompleteStepControls>
+                                    <>
+                                        <p>Please note that the data you share as part of this registration process will be managed in accordance with MSWA's <a href="#" target="_blank">Privacy policy</a></p>
+                                        <Button variant="contained" type="submit" onClick={() => {
+                                            this.props.nextStep(); 
+                                        }}>Next</Button> 
+                                    </>
+                                </CompleteStepControls>
                             </form>
                         )}
                     </Formik>

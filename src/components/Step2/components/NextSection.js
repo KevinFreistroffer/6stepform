@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 
-const NextButton = (props) => {
+const NextSection = (props) => {
   return (
 	<div className="next section">
 		<p>Please note that the data you share as part of this registration process will be managed in accordance with MSWA's <a href="#" target="_blank">Privacy policy</a></p>
@@ -14,4 +14,4 @@ const NextButton = (props) => {
   )
 }
 
-export default NextButton;
+export default NextSection;

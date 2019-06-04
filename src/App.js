@@ -47,7 +47,7 @@ export class App extends Component{
     return (
       <div className="App">   
         {currentStep === 1 && <Step1 nextStep={this.nextStep}></Step1>}
-        {currentStep === 2 && <Step2 nextStep={this.nextStep}></Step2>} 
+        {currentStep === 2 && <Step2 nextStep={this.nextStep} previousStep={this.previousStep}></Step2>} 
       </div>
     );
   }
