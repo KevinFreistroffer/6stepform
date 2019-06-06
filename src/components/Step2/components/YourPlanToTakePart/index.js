@@ -34,10 +34,12 @@ export const YourPlanToTakePart = ({
 	addFamilyTeamMember,
 	removeFamilyTeamMember,
 	typeOfMyNewTeam,
+	invoiceDetails,
 	errors,
 	touched,
 	formikHandleOnChange,
 	handleOnChange,
+	handleNewTeamMemberOnChange,
 	handleBlur
 }) => {
 
@@ -64,7 +66,7 @@ export const YourPlanToTakePart = ({
 					/>
 
 					<JoinExistingTeam
-						joinExistingTeamInput={joinExistingTeam}
+						joinExistingTeamInput={joinExistingTeamInput}
 						selectedPlan={selectedPlan}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
@@ -81,6 +83,7 @@ export const YourPlanToTakePart = ({
 						errors={errors}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
+						handleNewTeamMemberOnChange={handleNewTeamMemberOnChange}
 						addFamilyTeamMember={addFamilyTeamMember}
 						removeFamilyTeamMember={removeFamilyTeamMember}
 					/>
@@ -93,6 +96,7 @@ export const YourPlanToTakePart = ({
 						registrationFees={registrationFees}
 						purchasesFees={purchasesFees}
 						selectedPlan={selectedPlan}
+						invoiceDetails={invoiceDetails}
 						touched={touched}
 						errors={errors}
 						formikHandleOnChange={formikHandleOnChange}

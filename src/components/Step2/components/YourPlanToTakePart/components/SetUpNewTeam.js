@@ -28,27 +28,10 @@ const SetUpNewTeam = ({
 	errors,
 	formikHandleOnChange,
 	handleOnChange,
+	handleNewTeamMemberOnChange,
 	selectedPlan,
 	handleBlur
 }) => {
-	let FamilyTeamMembers;
-
-	if (familyTeamMembers.length > 0) {
-		FamilyTeamMembers = familyTeamMembers.map((member, index) => {
-			return (
-				<FamilyTeamForm
-					key={index}
-					firstName={member.firstName}
-					lastName={member.lastName}
-					dateOfBirth={member.dateOfBirth}
-					gender={member.gender}
-					medicalConditions={member.medicalConditions}
-					formikHandleOnChange={formikHandleOnChange}
-					handleOnChange={handleOnChange}
-				/>
-			);
-		});
-	}
 
 	return (
 		<>
@@ -125,19 +108,20 @@ const SetUpNewTeam = ({
 				</>
 			)}
 
-			{familyTeamMembers.map((member, index) => {
+			{familyTeamMembers.map((familyTeamMember, index) => {
 				return (
 					<FamilyTeamForm
 						key={index}
 						index={index}
-						firstName={member.firstName}
-						lastName={member.lastName}
-						dateOfBirth={member.dateOfBirth}
-						gender={member.gender}
-						medicalConditions={member.medicalConditions}
+						firstName={familyTeamMember.firstName}
+						lastName={familyTeamMember.lastName}
+						dateOfBirth={familyTeamMember.dateOfBirth}
+						gender={familyTeamMember.gender}
+						medicalConditions={familyTeamMember.medicalConditions}
 						formikHandleOnChange={formikHandleOnChange}
 						handleOnChange={handleOnChange}
 						removeFamilyTeamMember={removeFamilyTeamMember}
+						handleNewTeamMemberOnChange={handleNewTeamMemberOnChange}
 					/>
 				);
 			})}

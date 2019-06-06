@@ -23,6 +23,7 @@ const CompanyTeam = ({
 	purchasesFeesChecked,
 	registrationFees,
 	purchasesFees,
+	invoiceDetails,
 	formikHandleOnChange,
 	handleOnChange,
 	selectedPlan,
@@ -79,7 +80,7 @@ const CompanyTeam = ({
 							control={
 								<Checkbox
 									checked={createTeamPaymentCode}
-									name="create-team-payment-code"
+									name="createTeamPaymentCode"
 									onChange={event => {
 										handleOnChange(event);
 										formikHandleOnChange(event);
@@ -94,6 +95,7 @@ const CompanyTeam = ({
 					{createTeamPaymentCode && 
 				     <PaymentCodeForm 
 						registrationFeesChecked={registrationFeesChecked} 
+						invoiceDetails={invoiceDetails} 
 						purchasesChecked={purchasesFeesChecked} 
 						registrationFees={registrationFees} 
 						purchasesFees={purchasesFees} 

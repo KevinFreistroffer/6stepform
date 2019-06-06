@@ -15,18 +15,21 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 import InvoiceDetailsForm from './InvoiceDetailsForm';
+import { getIn } from 'formik';
 
 const PaymentCodeForm = ({
 	registrationFeesChecked,
 	purchasesChecked,
 	registrationFees,
 	purchasesFees,
+	invoiceDetails,
 	formikHandleOnChange,
 	handleOnChange,
 	handleBlur,
 	errors,
 	touched
 }) => {
+	
     return (
         <div className="payment-code-form">
         	<p>What would you like the team payment code to include?</p>
@@ -51,7 +54,7 @@ const PaymentCodeForm = ({
 				<RadioGroup
 					aria-label="Overall amount"
 					name="registration-fees-select"
-					value={registrationFees.limitTo}
+					value={getIn(registrationFees, 'limitTo')}
 					onChange={event => {
 						handleOnChange(event);
 						formikHandleOnChange(event); 
@@ -65,18 +68,16 @@ const PaymentCodeForm = ({
 					
 					<FormControl>
 						<input type="text" name="registration-overall-amount" placeholder="Overall amount" onChange={handleOnChange}/>
-						<div>Required</div>
 					</FormControl>
 					
 					<FormControlLabel
-						value="	"
+						value="numOfRegistrations"
 						control={<Radio />}
 						label="No. of registrations"
 					/>
 
 					<FormControl>
 						<input type="text" name="num-of-registrations" placeholder="Overall amount" onChange={handleOnChange}/>
-						<div>Required</div>
 					</FormControl>
 				</RadioGroup>
 			</FormControl>
@@ -102,7 +103,7 @@ const PaymentCodeForm = ({
 				<RadioGroup
 					aria-label="Overall amount"
 					name="purchases-select"
-					value={purchasesFees.limitTo}
+					value={getIn(purchasesFees, 'limitTo')}
 					onChange={event => {
 						handleOnChange(event);
 						formikHandleOnChange(event); 
@@ -116,25 +117,27 @@ const PaymentCodeForm = ({
 
 					<FormControl>
 						<input type="text" placeholder="Overall amount" />
-						<div>Required</div>
 					</FormControl>
 
 					<FormControlLabel
 						value="perPerson"
 						control={<Radio />}
-						label="No. of registrations"
+						label="No. of registrations" 
 					/>
 
 					<FormControl>
 						<input type="text" placeholder="Overall amount" />
-						<div>Required</div>
 					</FormControl>
 				</RadioGroup>
 			</FormControl>
 
 			<InvoiceDetailsForm 
+				invoiceDetails={invoiceDetails}
 				handleBlur={handleBlur}
 				handleOnChange={handleOnChange}
+				formikHandleOnChange={formikHandleOnChange}
+				errors={errors}
+				touched={touched}
 			/>
         </div>	
     );

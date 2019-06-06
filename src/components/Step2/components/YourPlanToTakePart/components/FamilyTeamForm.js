@@ -23,6 +23,7 @@ const FamilyTeamForm = ({
 	medicalConditions,
 	formikHandleOnChange,
 	handleOnChange,
+	handleNewTeamMemberOnChange,
 	handleBlur,
 	errors,
 	touched,
@@ -39,11 +40,11 @@ const FamilyTeamForm = ({
 					type="text"
 					label="First name"
 					placeholder="First name"
-					name="newTeamMemberFirstName"
+					name="familyTeamMembers[index].firstName"
 					value={firstName}
 					onChange={event => {
-						handleOnChange(event);
 						formikHandleOnChange(event);
+						handleOnChange(event, index);
 					}}
 					onBlur={handleBlur}
 					margin="normal"
@@ -60,11 +61,11 @@ const FamilyTeamForm = ({
 					type="text"
 					label="Last name"
 					placeholder="Last name"
-					name="newTeamMemberLastName"
+					name="familyTeamMembers[index].lastName"
 					value={lastName}
 					onChange={event => {
-						handleOnChange(event);
 						formikHandleOnChange(event);
+						handleOnChange(event, index);
 					}}
 					onBlur={handleBlur}
 					margin="normal"
@@ -77,11 +78,11 @@ const FamilyTeamForm = ({
 					type="text"
 					label="Date of birth"
 					placeholder="Date of birth"
-					name="newTeamMemberDateOfBirth"
+					name="familyTeamMembers[index].dateOfBirth"
 					value={dateOfBirth}
 					onChange={event => {
-						handleOnChange(event);
 						formikHandleOnChange(event);
+						handleOnChange(event, index);
 					}}
 					onBlur={handleBlur}
 					margin="normal"
@@ -106,11 +107,11 @@ const FamilyTeamForm = ({
 					type="text"
 					label="Medical conditions (optional)"
 					placeholder="Medical conditions (optional)"
-					name="newTeamMemberMedicalConditions"
+					name="familyTeamMembers[index].medicalConditions"
 					value={medicalConditions}
 					onChange={event => {
-						handleOnChange(event);
 						formikHandleOnChange(event);
+						handleOnChange(event, index);
 					}}
 					onBlur={handleBlur}
 					margin="normal"
@@ -129,16 +130,11 @@ const FamilyTeamForm = ({
 				<FormLabel component="legend">Gender</FormLabel>
 				<RadioGroup
 					aria-label="Gender"
-					name="newTeamMemberGender"
+					name="familyTeamMembers[index].gender"
 					value={gender}
 					onChange={event => {
-						console.log(
-							"onChange",
-							event.target.name,
-							event.target.value
-						);
-						handleOnChange(event);
 						formikHandleOnChange(event);
+						handleOnChange(event, index);
 					}}
 				>
 					<FormControlLabel

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+	import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -24,6 +24,7 @@ const JoinExistingTeam = ({
 	touched,
 	errors
 }) => {
+
 	return (
 		<FormControl fullWidth={true}>
 			<FormControlLabel
@@ -40,6 +41,7 @@ const JoinExistingTeam = ({
 					name="joinExistingTeamInput"
 					value={joinExistingTeamInput}
 					onChange={event => {
+						console.log(`joinExistingTeamInput onChange`, event.target.name, event.target.value);
 						formikHandleOnChange(event);
 						handleOnChange(event);
 					}}
